@@ -14,6 +14,10 @@ gem 'jquery-rails'
 gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 4.0'
 
+# slim
+gem 'slim-rails'
+gem 'html2slim'
+
 # UI/UX
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'

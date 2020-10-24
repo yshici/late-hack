@@ -152,6 +152,9 @@ GEM
       railties (>= 3.2, < 6.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    hpricot (0.8.6)
+    html2slim (0.2.0)
+      hpricot
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     jbuilder (2.10.1)
@@ -299,6 +302,13 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.3)
+    slim (4.1.0)
+      temple (>= 0.7.6, < 0.9)
+      tilt (>= 2.0.6, < 2.1)
+    slim-rails (3.2.0)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      slim (>= 3.0, < 5.0)
     sorcery (0.15.0)
       bcrypt (~> 3.1)
       oauth (~> 0.4, >= 0.4.4)
@@ -314,6 +324,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    temple (0.8.2)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -354,6 +365,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   font-awesome-rails
+  html2slim
   jbuilder (~> 2.7)
   jquery-rails
   listen (~> 3.2)
@@ -371,6 +383,7 @@ DEPENDENCIES
   selenium-webdriver
   simple_form
   simplecov
+  slim-rails
   sorcery
   spring
   spring-watcher-listen (~> 2.0.0)
