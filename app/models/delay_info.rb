@@ -6,5 +6,5 @@ class DelayInfo
   validates :name, presence: true
   validates :destination, presence: true
   validates :current_location, presence: true
-  validates :meeting_time, present: true
+  validates :meeting_time, presence: true
   end

@@ -1,0 +1,11 @@
+h1 あなたの予定を入力してみて
+
+
+
+= simple_form_for @delay_info, url: proof_of_delays_path do |f|
+  = f.input :meeting_time, class: 'datepicker'
+  = f.button :submit, class: %w[btn btn-primary]
+
+
+  = f.label :meeting_time do
+    = f.text_field :meeting_time, class: "form-control datetimepicker-input", id: "start_time", data: {toggle: "datetimepicker", target: "#start_time"}

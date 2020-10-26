@@ -14,6 +14,10 @@ gem 'jquery-rails'
 gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 4.0'
 
+gem "bootstrap4-datetime-picker-rails"
+gem 'momentjs-rails'
+gem 'bootstrap-datepicker-rails'
+
 # slim
 gem 'slim-rails'
 gem 'html2slim'
