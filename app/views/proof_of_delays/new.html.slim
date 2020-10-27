@@ -16,3 +16,10 @@ h1 あなたの予定を入力してみて
       .form-group
         = f.input :destination
       = f.button :submit, class: %w[btn btn-primary]
+
+
+
+- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ @maps_javascript_api_key }&callback=initMap".html_safe
+script{ async src = google_api }
+
+div id='map'
