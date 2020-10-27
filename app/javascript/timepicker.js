@@ -1,7 +1,5 @@
-$(function() {
-  console.log("OK");
-});
-
-$(function(){
-    $('.datepicker').datepicker();
+$(function () {
+  $('#datetimepicker12').datetimepicker({
+  daysOfWeekDisabled: [0, 6]
+  });
 });
