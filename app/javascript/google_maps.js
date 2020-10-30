@@ -1,5 +1,9 @@
 console.log("uiuiui")
 
+var palce_name = [];
+var place_formatted_address = [];
+var place_position = [];
+
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 35.6581, lng: 139.7017 },
@@ -43,14 +47,29 @@ function initMap() {
         scaledSize: new google.maps.Size(25, 25),
       };
       // Create a marker for each place.
+      const marker = new google.maps.Marker({
+        map,
+        // icon,
+        title: place.name, // 名称
+        position: place.geometry.location, // 緯度軽度
+        address: place.formatted_address, // 住所
+      })
+      palce_name = place.name;
+      place_formatted_address = place.formatted_address;
+      place_position = place.geometry.location;
+      const contentString =
+        `<div>` +
+          `<p>${ place.name }</p>` +
+          `<p>${ place.formatted_address }</p>` +
+          // `<a href="proof_of_days/new"></a><input type="button" value="追加" onclick="addPlace(place_name, place_position)"`
+          `<input type="button" value="目的地に設定" id="addplace">` +
+        `</div>`;
+      // addPlace(place_name, place_position);
+
       markers.push(
-        new google.maps.Marker({
-          map,
-          icon,
-          title: place.name,
-          position: place.geometry.location,
-        })
+        new google.maps.Marker({marker})
       );
+      attachSecretMessage(marker, contentString);
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
@@ -62,4 +81,33 @@ function initMap() {
     map.fitBounds(bounds);
   });
 }
+
+function attachSecretMessage(marker, contentString) {
+  const infowindow = new google.maps.InfoWindow({
+    content: contentString,
+  });
+  marker.addListener("click", () => {
+    infowindow.open(marker.get("map"), marker);
+  });
+}
+
+// function addPlace(place_name, place_position) {
+//   var place_name = place_name;
+//   document.getElementById("data-palace-name").value = name ;
+// }
+
+window.onload = function(){
+  var b = document.getElementById('addplace');
+  // イベントハンドラ
+  b.addEventListener('click', function(){
+      console.log('clicked'),
+      document.getElementById("data-palace-name").value = name;
+  }, false);
+  // クリックイベントを発火
+  b.click();
+
+}
+
+window.attachSecretMessage = attachSecretMessage;
+// window.addPlace = addPlace;
 window.initMap = initMap;
