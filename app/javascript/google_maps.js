@@ -83,6 +83,7 @@ function attachInfoWindow(marker, contentString, callback) {
     infowindow.addListener('domready', () => {
       document.getElementById("addplace").addEventListener("click", () => {
         document.getElementById("data-place-name").value = place_name2;
+        document.getElementById("data-place-location").value = place_position2;
       });
     });
   });
