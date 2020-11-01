@@ -14,7 +14,8 @@ h1 あなたの予定を入力してみて
       .form-group
         = f.input :current_location
       .form-group
-        = f.text_field :destination, id: "data-palace-name"
+        = f.text_field :destination, id: "data-place-name"
+        = f.text_field :destination, id: "data-place-address", type: "hidden"
       = f.button :submit, class: %w[btn btn-primary]
 
 div#map

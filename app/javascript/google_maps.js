@@ -1,6 +1,4 @@
-console.log("uiuiui")
-
-var palce_name = [];
+var place_name = [];
 var place_formatted_address = [];
 var place_position = [];
 
@@ -39,29 +37,21 @@ function initMap() {
         console.log("Returned place contains no geometry");
         return;
       }
-      const icon = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25),
-      };
       // Create a marker for each place.
       const marker = new google.maps.Marker({
         map,
-        // icon,
         title: place.name, // 名称
         position: place.geometry.location, // 緯度軽度
         address: place.formatted_address, // 住所
       })
-      palce_name = place.name;
+      place_name = place.name;
       place_formatted_address = place.formatted_address;
       place_position = place.geometry.location;
       const contentString =
-        `<div>` +
-          `<p>${ place.name }</p>` +
-          `<p>${ place.formatted_address }</p>` +
-          // `<a href="proof_of_days/new"></a><input type="button" value="追加" onclick="addPlace(place_name, place_position)"`
+        `<div id="ababab">` +
+          `<p>${ place_name }</p>` +
+          `<p>${ place_formatted_address }</p>` +
+          // `<a href="proof_of_days/new"></a><input type="button" value="追加" onclick="addPlace(place_name, place_position)"` +
           `<input type="button" value="目的地に設定" id="addplace">` +
         `</div>`;
       // addPlace(place_name, place_position);
@@ -69,7 +59,7 @@ function initMap() {
       markers.push(
         new google.maps.Marker({marker})
       );
-      attachSecretMessage(marker, contentString);
+      attachInfoWindow(marker, contentString);
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
@@ -82,32 +72,25 @@ function initMap() {
   });
 }
 
-function attachSecretMessage(marker, contentString) {
+function attachInfoWindow(marker, contentString, callback) {
+  const place_name2 = marker.title;
+  const place_position2 = marker.position;
   const infowindow = new google.maps.InfoWindow({
     content: contentString,
   });
   marker.addListener("click", () => {
-    infowindow.open(marker.get("map"), marker);
+    infowindow.open(marker.get("map"), marker)
+    infowindow.addListener('domready', () => {
+      document.getElementById("addplace").addEventListener("click", () => {
+        document.getElementById("data-place-name").value = place_name2;
+      });
+    });
   });
 }
-
-// function addPlace(place_name, place_position) {
-//   var place_name = place_name;
-//   document.getElementById("data-palace-name").value = name ;
-// }
-
-window.onload = function(){
-  var b = document.getElementById('addplace');
-  // イベントハンドラ
-  b.addEventListener('click', function(){
-      console.log('clicked'),
-      document.getElementById("data-palace-name").value = name;
-  }, false);
-  // クリックイベントを発火
-  b.click();
-
-}
-
-window.attachSecretMessage = attachSecretMessage;
-// window.addPlace = addPlace;
 window.initMap = initMap;
+
+// function addPlace(place_name, position) {
+//   // var name = place_name;
+//   console.log(place_name);
+//   document.getElementById("data-place-name").value = place_name;
+// }
