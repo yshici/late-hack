@@ -23,7 +23,8 @@ gem 'slim-rails'
 gem 'html2slim'
 
 # UI/UX
-gem 'turbolinks', '~> 5'
+gem 'rails-i18n'
+# gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 
 # Database

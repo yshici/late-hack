@@ -1,21 +1,21 @@
-h1 あなたの予定を入力してみて
-
+h1 あなたの予定を入力してください
 
 .container
   .col-sm-6
-    = simple_form_for @delay_info, url: proof_of_delays_path do |f|
+    = form_with model: @delay_info, url: proof_of_delays_path do |f|
       .form-group
-        = f.text_field :meeting_time, class: 'form-control datetimepicker-input', id: "datetimepicker12", data: {toggle: "datetimepicker", target: "#datetimepicker12"}
+        = f.label :meeting_time
+        = f.text_field :meeting_time, class:'form-control datetimepicker-input', type:'text', id: "datetimepicker12", data: {toggle: "datetimepicker", target: "#datetimepicker12"}, placeholder: "待ち合わせ時間"
         .input-group-append data-target="#datetimepicker12" data-toggle="datetimepicker"
           .input-group-text
             i.fa.fa-calendar
       .form-group
-        = f.input :name
+        = f.label :name
+        = f.text_field :name, placeholder: "名前"
       .form-group
-        = f.input :current_location
-      .form-group
-        = f.text_field :destination, id: "data-place-name"
-        = f.text_field :longitude_latitude, id: "data-place-location", type: "hidden"
+        = f.label :destination
+        = f.text_field :destination, id: "data-place-name", placeholder: "目的地：マップから選択して下さい"
+        = f.text_field :lat_lng, id: "data-place-location", type: "hidden"
       = f.button :submit, class: %w[btn btn-primary]
 
 div#map
