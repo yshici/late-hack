@@ -1,7 +1,3 @@
-var place_name = [];
-var place_formatted_address = [];
-var place_position = [];
-
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 35.6581, lng: 139.7017 },
@@ -32,66 +28,59 @@ function initMap() {
     markers = [];
     // For each place, get the icon, name and location.
     const bounds = new google.maps.LatLngBounds();
-    places.forEach((place) => {
-      if (!place.geometry) {
+    for (i = 0; i < places.length; i++) {
+      if (!places[i].geometry) {
         console.log("Returned place contains no geometry");
         return;
       }
       // Create a marker for each place.
-      const marker = new google.maps.Marker({
+      var marker = new google.maps.Marker({
         map,
-        title: place.name, // 名称
-        position: place.geometry.location, // 緯度軽度
-        address: place.formatted_address, // 住所
+        title: places[i].name, // 名称
+        position: places[i].geometry.location, // 緯度軽度
+        address: places[i].formatted_address, // 住所
       })
-      place_name = place.name;
-      place_formatted_address = place.formatted_address;
-      place_position = place.geometry.location;
       const contentString =
         `<div id="ababab">` +
-          `<p>${ place_name }</p>` +
-          `<p>${ place_formatted_address }</p>` +
-          // `<a href="proof_of_days/new"></a><input type="button" value="追加" onclick="addPlace(place_name, place_position)"` +
+          `<p>${ marker.title }</p>` +
+          `<p>${ marker.address }</p>` +
           `<input type="button" value="目的地に設定" id="addplace">` +
         `</div>`;
-      // addPlace(place_name, place_position);
-
       markers.push(
         new google.maps.Marker({marker})
       );
-      attachInfoWindow(marker, contentString);
+      attachInfoWindow(marker, places, contentString, i);
 
-      if (place.geometry.viewport) {
+      if (places[i].geometry.viewport) {
         // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
+        bounds.union(places[i].geometry.viewport);
       } else {
-        bounds.extend(place.geometry.location);
+        bounds.extend(places[i].geometry.location);
       }
-    });
+    };
     map.fitBounds(bounds);
   });
-}
-
-function attachInfoWindow(marker, contentString, callback) {
-  const place_name2 = marker.title;
-  const place_position2 = marker.position;
-  const infowindow = new google.maps.InfoWindow({
-    content: contentString,
-  });
-  marker.addListener("click", () => {
-    infowindow.open(marker.get("map"), marker)
-    infowindow.addListener('domready', () => {
-      document.getElementById("addplace").addEventListener("click", () => {
-        document.getElementById("data-place-name").value = place_name2;
-        document.getElementById("data-place-location").value = place_position2;
+  var currentInfoWindow = null;
+  function attachInfoWindow(marker, places, contentString, n) {
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString,
+    });
+    marker.addListener("click", () => {
+      if (currentInfoWindow) {
+        currentInfoWindow.close();
+      }
+      infowindow.open(marker.get("map"), marker);
+      currentInfoWindow = infowindow;
+      infowindow.addListener('domready', () => {
+        document.getElementById("addplace").addEventListener("click", () => {
+          document.getElementById("data-place-name").value = marker.title;
+          document.getElementById("data-place-location").value = marker.position;
+        });
       });
     });
+  google.maps.event.addListener(map, 'click', function(){
+    infowindow.close();
   });
 }
+}
 window.initMap = initMap;
-
-// function addPlace(place_name, position) {
-//   // var name = place_name;
-//   console.log(place_name);
-//   document.getElementById("data-place-name").value = place_name;
-// }
