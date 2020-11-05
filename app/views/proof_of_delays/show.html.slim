@@ -1,2 +1,16 @@
-h1 ProofOfDelay#show
-p Find me in app/views/proof_of_delay/show.html.slim
+h1 精密な診断結果：
+
+h1 あなたはこの予定に3時間遅れることができます。
+
+h1 目的地周辺の天気は "#{@weather}"です。
+
+h1 こんな天気では遅刻も仕方ありません。
+
+h1 言い訳に使えそうな情報
+
+h1 現在遅延している路線は以下の通りです。
+
+- @name_train_delay.each do |t|
+  h1 = t
+
+h1 近くの路線が遅延していれば積極的に言い訳に組み込みましょう。
