@@ -14,8 +14,17 @@ gem 'jquery-rails'
 gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 4.0'
 
+gem "bootstrap4-datetime-picker-rails"
+gem 'momentjs-rails'
+gem 'bootstrap-datepicker-rails'
+
+# slim
+gem 'slim-rails'
+gem 'html2slim'
+
 # UI/UX
-gem 'turbolinks', '~> 5'
+gem 'rails-i18n'
+# gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 
 # Database

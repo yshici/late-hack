@@ -1,0 +1,9 @@
+ja:
+  activemodel:
+    attributes:
+      delay_info:
+        name: '名前'
+        destination: '待ち合わせ場所'
+        lat_lng: '緯度経度'
+        current_location: '現在地'
+        meeting_time: '待ち合わせ時間'
