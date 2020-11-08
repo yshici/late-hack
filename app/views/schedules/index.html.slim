@@ -1,2 +1,5 @@
-h1 Schedules#index
-p Find me in app/views/schedules/index.html.slim
+= link_to 'スケジュール登録', new_schedule_path
+
+
+= month_calendar do |date|
+  = date
