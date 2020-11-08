@@ -7,4 +7,6 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true, length: { maximum: 255 }
   validates :name, uniqueness: true, length: { maximum: 255 }
+
+  has_many :schedules, dependent: :destroy
 end
