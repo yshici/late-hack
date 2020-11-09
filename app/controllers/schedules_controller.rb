@@ -9,7 +9,17 @@ class SchedulesController < ApplicationController
   end
 
   def create
-    redirect_to schedules_path
+    schedule_params_kai = schedule_params
+    # binding.pry
+    lat, lng = params[:schedule][:destination_lat_lng].delete("()").split(/,/)
+    schedule_params_kai[:destination_lat] = lat.to_f
+    schedule_params_kai[:destination_lng] = lng.to_f
+    # schedule_params_kai << { destination_lng: lng.to_f }
+    @schedule = current_user.schedules.new(schedule_params_kai)
+    if @schedule.save
+      binding.pry
+      redirect_to schedules_path
+    end
   end
 
   def edit
@@ -19,5 +29,11 @@ class SchedulesController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def schedule_params
+    params.require(:schedule).permit(:name, :meeting_time, :destination_name, :destination_address, :description, :user_id)
   end
 end

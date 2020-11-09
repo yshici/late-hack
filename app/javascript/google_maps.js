@@ -75,6 +75,7 @@ function initMap() {
         document.getElementById("addplace").addEventListener("click", () => {
           document.getElementById("data-place-name").value = marker.title;
           document.getElementById("data-place-location").value = marker.position;
+          document.getElementById("data-place-address").value = marker.address;
         });
       });
     });

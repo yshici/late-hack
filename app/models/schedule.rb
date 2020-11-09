@@ -4,7 +4,8 @@
 #     t.datetime "meeting_time"
 #     t.string "destination_name"
 #     t.string "destination_address"
-#     t.float "destination_lat_lng"
+#     t.float "destination_lat"
+#     t.float "destination_lng"
 #     t.text "description"
 #     t.integer "user_id"
 #     t.datetime "created_at", precision: 6, null: false
@@ -16,7 +17,8 @@ class Schedule < ApplicationRecord
   validates :meeting_time, presence: true
   validates :destination_name, presence: true, length: { maximum: 255 }
   validates :destination_address, presence: true, length: { maximum: 255 }
-  validates :destination_lat_lng, presence: true
+  validates :destination_lat, presence: true
+  validates :destination_lng, presence: true
   validates :description, length: { maximum: 1000 }
 
   belongs_to :user

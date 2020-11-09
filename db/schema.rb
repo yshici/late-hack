@@ -17,7 +17,8 @@ ActiveRecord::Schema.define(version: 2020_11_08_095332) do
     t.datetime "meeting_time"
     t.string "destination_name"
     t.string "destination_address"
-    t.float "destination_lat_lng"
+    t.float "destination_lat"
+    t.float "destination_lng"
     t.text "description"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false

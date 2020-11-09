@@ -5,7 +5,8 @@ class CreateSchedules < ActiveRecord::Migration[6.0]
       t.datetime :meeting_time
       t.string :destination_name
       t.string :destination_address
-      t.float :destination_lat_lng
+      t.float :destination_lat
+      t.float :destination_lng
       t.text :description
       t.integer :user_id
 
