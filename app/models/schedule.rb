@@ -22,4 +22,8 @@ class Schedule < ApplicationRecord
   validates :description, length: { maximum: 1000 }
 
   belongs_to :user
+
+  def start_time
+    self.meeting_time
+  end
 end

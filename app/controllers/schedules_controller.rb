@@ -1,6 +1,10 @@
 class SchedulesController < ApplicationController
   def index
     @schedules = Schedule.all
+    # @schedule = Schedule.find(2)
+    # @schedule[:start_time] = Date.today.strftime('%Y-%m-%d')
+    # binding.pry
+    # @schedule_calendar =
   end
 
   def new
@@ -9,15 +13,8 @@ class SchedulesController < ApplicationController
   end
 
   def create
-    schedule_params_kai = schedule_params
-    # binding.pry
-    lat, lng = params[:schedule][:destination_lat_lng].delete("()").split(/,/)
-    schedule_params_kai[:destination_lat] = lat.to_f
-    schedule_params_kai[:destination_lng] = lng.to_f
-    # schedule_params_kai << { destination_lng: lng.to_f }
-    @schedule = current_user.schedules.new(schedule_params_kai)
+    @schedule = current_user.schedules.new(adjust_schedule_params)
     if @schedule.save
-      binding.pry
       redirect_to schedules_path
     end
   end
@@ -31,6 +28,10 @@ class SchedulesController < ApplicationController
   end
 
   def update
+    @schedule = current_user.schedules.find(params[:id])
+    if @schedule.update(adjust_schedule_params)
+      redirect_to schedules_path
+    end
   end
 
   def destroy
@@ -40,5 +41,13 @@ class SchedulesController < ApplicationController
 
   def schedule_params
     params.require(:schedule).permit(:name, :meeting_time, :destination_name, :destination_address, :description, :user_id)
+  end
+
+  def adjust_schedule_params
+    adjust_latlng = schedule_params
+    lat, lng = params[:schedule][:destination_lat_lng].delete("()").split(/,/)
+    adjust_latlng[:destination_lat] = lat.to_f
+    adjust_latlng[:destination_lng] = lng.to_f
+    return adjust_latlng
   end
 end

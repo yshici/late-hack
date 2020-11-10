@@ -397,7 +397,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (>= 6)
   selenium-webdriver
-  simple_calendar
+  simple_calendar (~> 2.0)
   simple_form
   simplecov
   slim-rails
