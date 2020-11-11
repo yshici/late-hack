@@ -1,4 +1,5 @@
 class ProofOfDelaysController < ApplicationController
+  skip_before_action :require_login
   def new
     @delay_info = DelayInfo.new
     @google_maps_api_key = Rails.application.credentials.api_key[:google_maps]
