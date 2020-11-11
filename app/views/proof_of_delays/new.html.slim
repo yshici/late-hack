@@ -5,10 +5,8 @@ h1 あなたの予定を入力してください
     = form_with model: @delay_info, url: proof_of_delays_path, local: true do |f|
       .form-group
         = f.label :meeting_time
-        = f.text_field :meeting_time, class:'form-control datetimepicker-input', type:'text', id: "datetimepicker12", data: {toggle: "datetimepicker", target: "#datetimepicker12"}, placeholder: "待ち合わせ時間", size: "100x100"
-        .input-group-append data-target="#datetimepicker12" data-toggle="datetimepicker"
-          .input-group-text
-            i.fa.fa-calendar
+        = f.text_field :meeting_time, class:'form-control datetimepicker-input', id: 'datetimepicker13', type:'text', data: {toggle: "datetimepicker", target: "#datetimepicker12"}, placeholder: "待ち合わせ時間", size: "100x100"
+        div#datetimepicker13
       .form-group
         = f.label :name
         = f.text_field :name, placeholder: "名前", size: "100x100"
@@ -17,10 +15,10 @@ h1 あなたの予定を入力してください
         = f.text_field :destination_name, id: "data-place-name", placeholder: "マップから選択して下さい", size: "100x100"
         = f.text_field :destination_lat_lng, id: "data-place-location", type: "hidden"
         = f.text_field :destination_address, id: "data-place-address", type: "hidden"
+        div#map
+        input id="pac-input" class="controls" type="text" placeholder="Search Box"
+
+        - google_api_place = "https://maps.googleapis.com/maps/api/js?key=#{ @google_maps_api_key }&libraries=places&callback=initMap".html_safe
+        script{ async src = google_api_place }
+
       = f.submit nil, class: %w[btn btn-primary]
-
-div#map
-input id="pac-input" class="controls" type="text" placeholder="Search Box"
-
-- google_api_place = "https://maps.googleapis.com/maps/api/js?key=#{ @google_maps_api_key }&libraries=places&callback=initMap".html_safe
-script{ async src = google_api_place }

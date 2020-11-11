@@ -6,8 +6,8 @@
         = f.text_field :name, placeholder: "名前", size: "100x100"
       .form-group
         = f.label :meeting_time
-        = f.text_field :meeting_time, class:'form-control datetimepicker-input', type:'text', id: "datetimepicker12", data: {toggle: "datetimepicker", target: "#datetimepicker12"}, placeholder: "待ち合わせ時間", size: "100x100"
-        .input-group-append data-target="#datetimepicker12" data-toggle="datetimepicker"
+        = f.text_field :meeting_time, class:'form-control datetimepicker-input', type:'text', id: "datetimepicker1", data: {toggle: "datetimepicker", target: "#datetimepicker12"}, placeholder: "待ち合わせ時間", size: "100x100"
+        .input-group-append data-target="#datetimepicker1" data-toggle="datetimepicker"
           .input-group-text
             i.fa.fa-calendar
       .form-group
@@ -25,3 +25,5 @@ input id="pac-input" class="controls" type="text" placeholder="Search Box"
 
 - google_api_place = "https://maps.googleapis.com/maps/api/js?key=#{ @google_maps_api_key }&libraries=places&callback=initMap".html_safe
 script{ async src = google_api_place }
+
+
