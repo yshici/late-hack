@@ -7,3 +7,21 @@ ja:
         lat_lng: '緯度経度'
         current_location: '現在地'
         meeting_time: '待ち合わせ時間'
+  activerecord:
+    models:
+      user: 'ユーザー'
+      schedule: 'スケジュール'
+    attributes:
+      user:
+        name: 'ユーザー名'
+        email: 'メールアドレス'
+        password: 'パスワード'
+        password_confirmation: 'パスワード確認'
+      schedule:
+        name: '予定名'
+        meeting_time: '待ち合わせ時間'
+        destination_name: '待ち合わせ場所'
+        destination_address: '目的地住所'
+        destination_lat: '緯度'
+        destination_lang: '経度'
+        description: '概要'

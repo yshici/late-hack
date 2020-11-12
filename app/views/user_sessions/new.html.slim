@@ -1,0 +1,14 @@
+.container
+  .row
+    .col-md-10.offset-md-1.col-lg-8.offset-lg-2
+      h1 ログイン
+      = form_with url: login_path, local: true do |f|
+        .form-group
+          = f.label :email
+          = f.text_field :email, id: "email", class: "form-control", type: "email"
+        .form-group
+          = f.label :password
+          = f.text_field :password, id:"password", class:"form-control", type:"password"
+        = f.submit nil, class: 'btn btn-primary'
+
+      = link_to 'ユーザー登録', new_user_path
