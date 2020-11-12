@@ -5,7 +5,7 @@ h1 あなたの予定を入力してください
     = form_with model: @delay_info, url: proof_of_delays_path, local: true do |f|
       .form-group
         = f.label :meeting_time
-        = f.text_field :meeting_time, class:'form-control datetimepicker-input', id: 'datetimepicker13', type:'text', data: {toggle: "datetimepicker", target: "#datetimepicker12"}, placeholder: "待ち合わせ時間", size: "100x100"
+        = f.text_field :meeting_time, class:'form-control', id: 'datetimepicker13', type:'text', placeholder: "待ち合わせ時間", size: "100x100"
         div#datetimepicker13
       .form-group
         = f.label :name
@@ -22,3 +22,5 @@ h1 あなたの予定を入力してください
         script{ async src = google_api_place }
 
       = f.submit nil, class: %w[btn btn-primary]
+
+/ , data: {toggle: "datetimepicker", target: "#datetimepicker13"}
