@@ -1,10 +1,6 @@
 class SchedulesController < ApplicationController
   def index
     @schedules = Schedule.all
-    # @schedule = Schedule.find(2)
-    # @schedule[:start_time] = Date.today.strftime('%Y-%m-%d')
-    # binding.pry
-    # @schedule_calendar =
   end
 
   def new
@@ -15,12 +11,15 @@ class SchedulesController < ApplicationController
   def create
     @schedule = current_user.schedules.new(adjust_schedule_params)
     if @schedule.save
-      redirect_to schedules_path
+      redirect_to schedules_path, success: 'スケジュールを登録しました'
+    else
+      flash.now[:danger] = 'スケジュール登録できませんでした'
+      render :new
     end
   end
 
   def show
-    @schedule = Schedule.find(params[:id])
+    @schedule = current_user.schedules.find(params[:id])
   end
 
   def edit
@@ -30,7 +29,10 @@ class SchedulesController < ApplicationController
   def update
     @schedule = current_user.schedules.find(params[:id])
     if @schedule.update(adjust_schedule_params)
-      redirect_to schedules_path
+      redirect_to schedules_path, success: 'スケジュールを更新しました'
+    else
+      lash.now[:danger] = 'スケジュール更新に失敗しました'
+      render :edit
     end
   end
 
