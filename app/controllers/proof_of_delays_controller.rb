@@ -49,6 +49,16 @@ class ProofOfDelaysController < ApplicationController
     nhk_program = JSON.parse(response_nhk.read)
     puts nhk_program
 
+    # ぐるなびapi取得
+    restaurant_api_key = Rails.application.credentials.api_key[:restaurant_gurunavi]
+    restaurant_url = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=#{restaurant_api_key}&latitude=35.6581&longitude=139.7017"
+
+    require "json"
+    require "open-uri"
+
+    response_restaurant = open(restaurant_url)
+    restaurant_gurunavi = JSON.parse(response_restaurant.read)
+    puts restaurant_gurunavi
 
     redirect_to proof_of_delays_path
   end
