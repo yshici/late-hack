@@ -47,9 +47,10 @@ class ProofOfDelaysController < ApplicationController
 
     response_nhk = open(nhk_program_url)
     nhk_program = JSON.parse(response_nhk.read)
-    puts nhk_program
+    nhk = nhk_program["nowonair_list"]["g1"]["previous"]["title"]
+    puts nhk
 
-    # ぐるなびapi取得
+    # ぐるなび api取得
     restaurant_api_key = Rails.application.credentials.api_key[:restaurant_gurunavi]
     restaurant_url = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=#{restaurant_api_key}&latitude=35.6581&longitude=139.7017"
 
@@ -59,6 +60,20 @@ class ProofOfDelaysController < ApplicationController
     response_restaurant = open(restaurant_url)
     restaurant_gurunavi = JSON.parse(response_restaurant.read)
     puts restaurant_gurunavi
+    get_restaurnt_info = restaurant_gurunavi["rest"][0]["name"]
+    get_restaurnt_url = restaurant_gurunavi["rest"][0]["url"]
+
+    # 楽天トラベル api取得
+    rakuten_hotel_api_key = Rails.application.credentials.api_key[:hotel_rakuten]
+    rakuten_hotel_url = "https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?format=json&datumType=1&latitude=35.6581&longitude=139.7017&applicationId=#{rakuten_hotel_api_key}"
+
+    require "json"
+    require "open-uri"
+
+    response_hotel = open(rakuten_hotel_url)
+    hotel_rakuten = JSON.parse(response_hotel.read)
+    puts hotel_rakuten
+    # binding.pry
 
     redirect_to proof_of_delays_path
   end
@@ -76,3 +91,4 @@ private
     params.require(:delay_info).permit(:name, :destination_name, :destination_lat_lng, :destination_address, :current_location, :meeting_time)
   end
 end
+
