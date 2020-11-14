@@ -18,4 +18,4 @@ table.table
           td = Schedule.human_attribute_name(:description)
           td = @schedule.description
 = link_to '編集', edit_schedule_path(@schedule)
-= link_to '削除', schedule_path(@schedule), method: :delete
+= link_to '削除', schedule_path(@schedule), method: :delete, data: { confirm: '削除しますか？' }

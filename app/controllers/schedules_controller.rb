@@ -1,4 +1,6 @@
 class SchedulesController < ApplicationController
+  before_action :set_schedule, only: %i[show edit update destroy]
+
   def index
     @schedules = Schedule.all
   end
@@ -18,16 +20,11 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def show
-    @schedule = current_user.schedules.find(params[:id])
-  end
+  def show; end
 
-  def edit
-    @schedule = current_user.schedules.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @schedule = current_user.schedules.find(params[:id])
     if @schedule.update(adjust_schedule_params)
       redirect_to schedules_path, success: 'スケジュールを更新しました'
     else
@@ -37,6 +34,12 @@ class SchedulesController < ApplicationController
   end
 
   def destroy
+    @schedule.destroy!
+    redirect_to schedules_path, success: 'スケジュールを削除しました'
+  end
+
+  def set_schedule
+    @schedule = current_user.schedules.find(params[:id])
   end
 
   private
