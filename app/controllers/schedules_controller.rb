@@ -7,7 +7,6 @@ class SchedulesController < ApplicationController
 
   def new
     @schedule = Schedule.new
-    @google_maps_api_key = Rails.application.credentials.api_key[:google_maps]
   end
 
   def create
