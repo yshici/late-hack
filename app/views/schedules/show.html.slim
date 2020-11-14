@@ -8,7 +8,7 @@ table.table
       tr
         th scope="col"
           td = Schedule.human_attribute_name(:meeting_time)
-          td = @schedule.meeting_time
+          td = l @schedule.meeting_time, format: :long
       tr
         th scope="col"
           td = Schedule.human_attribute_name(:destination_name)
