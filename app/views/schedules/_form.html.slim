@@ -20,7 +20,7 @@
         script{ async src = google_api_place }
       .form-group
         = f.label :description
-        = f.text_field :description
+        = f.text_area :description, class:'form-control'
       = f.button '登録する', type: 'button', onclick: 'submit();', class: %w[btn btn-primary]
 
 / datetime_fieldでカレンダー入力
