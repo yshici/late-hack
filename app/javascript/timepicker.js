@@ -2,6 +2,7 @@
 $(function () {
   $('#datetimepicker13').datetimepicker({
     inline: true,
-    sideBySide: true
+    sideBySide: true,
+    stepping: 60
   });
 });
