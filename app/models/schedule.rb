@@ -20,6 +20,11 @@ class Schedule < ApplicationRecord
   validates :destination_lat, presence: true
   validates :destination_lng, presence: true
   validates :description, length: { maximum: 1000 }
+  validate  :datetime_not_before
+
+  def datetime_not_before
+    errors.add(:meeting_time, "は現在時刻以降を指定してください") if meeting_time.nil? || meeting_time < DateTime.now.ago(1.hours)
+  end
 
   belongs_to :user
 
