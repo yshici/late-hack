@@ -1,0 +1,16 @@
+table.table
+  thead
+    tbody
+      tr
+        th scope="col"
+          td = User.human_attribute_name(:name)
+          td = current_user.name
+      tr
+        th scope="col"
+          td = User.human_attribute_name(:email)
+          td = current_user.email
+      tr
+        th scope="col"
+          td = User.human_attribute_name(:created_at)
+          td = l current_user.created_at, format: :long
+= link_to '編集', edit_user_path(current_user)
