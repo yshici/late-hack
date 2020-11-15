@@ -1,11 +1,12 @@
 class SchedulesController < ApplicationController
+  before_action :set_schedule, only: %i[show edit update destroy]
+
   def index
     @schedules = Schedule.all
   end
 
   def new
     @schedule = Schedule.new
-    @google_maps_api_key = Rails.application.credentials.api_key[:google_maps]
   end
 
   def create
@@ -18,16 +19,11 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def show
-    @schedule = current_user.schedules.find(params[:id])
-  end
+  def show; end
 
-  def edit
-    @schedule = current_user.schedules.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @schedule = current_user.schedules.find(params[:id])
     if @schedule.update(adjust_schedule_params)
       redirect_to schedules_path, success: 'スケジュールを更新しました'
     else
@@ -37,19 +33,29 @@ class SchedulesController < ApplicationController
   end
 
   def destroy
+    @schedule.destroy!
+    redirect_to schedules_path, success: 'スケジュールを削除しました'
+  end
+
+  def set_schedule
+    @schedule = current_user.schedules.find(params[:id])
   end
 
   private
 
   def schedule_params
-    params.require(:schedule).permit(:name, :meeting_time, :destination_name, :destination_address, :description, :user_id)
+    params.require(:schedule).permit(:name, :meeting_time, :destination_name, :destination_address, :destination_lat_lng, :description, :user_id)
   end
 
   def adjust_schedule_params
-    adjust_latlng = schedule_params
-    lat, lng = params[:schedule][:destination_lat_lng].delete("()").split(/,/)
-    adjust_latlng[:destination_lat] = lat.to_f
-    adjust_latlng[:destination_lng] = lng.to_f
-    return adjust_latlng
+    # 緯度経度処理
+    lat, lng = schedule_params[:destination_lat_lng].delete("()").split(/,/)
+    adjust = schedule_params
+    adjust.delete(:destination_lat_lng)
+    adjust[:destination_lat] = lat.to_f
+    adjust[:destination_lng] = lng.to_f
+    # 待ち合わせ時間処理
+    adjust[:meeting_time] = DateTime.parse(adjust[:meeting_time])
+    return adjust
   end
 end

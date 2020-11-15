@@ -8,7 +8,7 @@ table.table
       tr
         th scope="col"
           td = Schedule.human_attribute_name(:meeting_time)
-          td = @schedule.meeting_time
+          td = l @schedule.meeting_time, format: :long
       tr
         th scope="col"
           td = Schedule.human_attribute_name(:destination_name)
@@ -18,20 +18,4 @@ table.table
           td = Schedule.human_attribute_name(:description)
           td = @schedule.description
 = link_to '編集', edit_schedule_path(@schedule)
-
-
-
-
-
-/   create_table "schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-/     t.string "name"
-/     t.datetime "meeting_time"
-/     t.string "destination_name"
-/     t.string "destination_address"
-/     t.float "destination_lat"
-/     t.float "destination_lng"
-/     t.text "description"
-/     t.integer "user_id"
-/     t.datetime "created_at", precision: 6, null: false
-/     t.datetime "updated_at", precision: 6, null: false
-/   end
+= link_to '削除', schedule_path(@schedule), method: :delete, data: { confirm: '削除しますか？' }

@@ -5,4 +5,4 @@
   = date
   - schedules.each do |schedule|
     div
-      = link_to schedule.name, edit_schedule_path(schedule), class: 'btn btn-primary'
+      = link_to schedule.name, schedule_path(schedule), class: 'btn btn-primary'
