@@ -46,6 +46,9 @@ gem 'pundit'
 # gem 'cancancan'
 gem 'sorcery'
 
+# Background Job
+gem 'whenever'
+
 # Configuration
 gem 'config'
 gem 'dotenv-rails', require: 'dotenv/rails-now'

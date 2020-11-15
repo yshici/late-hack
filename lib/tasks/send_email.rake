@@ -5,5 +5,6 @@ namespace :send_email do
       if schedule.meeting_time > 1.hours.ago && schedule.meeting_time < 1.hours.since
         DelayInfoMailer.with(schedule: schedule).delay_info.deliver_now
       end
+    end
   end
 end
