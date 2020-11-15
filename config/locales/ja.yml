@@ -17,6 +17,7 @@ ja:
         email: 'メールアドレス'
         password: 'パスワード'
         password_confirmation: 'パスワード確認'
+        created_at: '登録日時'
       schedule:
         name: '予定名'
         meeting_time: '待ち合わせ時間'
