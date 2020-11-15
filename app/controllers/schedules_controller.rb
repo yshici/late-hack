@@ -11,7 +11,6 @@ class SchedulesController < ApplicationController
 
   def create
     @schedule = current_user.schedules.new(adjust_schedule_params)
-    binding.pry
     if @schedule.save
       redirect_to schedules_path, success: 'スケジュールを登録しました'
     else
@@ -49,12 +48,13 @@ class SchedulesController < ApplicationController
   end
 
   def adjust_schedule_params
+    # 緯度経度処理
     lat, lng = schedule_params[:destination_lat_lng].delete("()").split(/,/)
     adjust = schedule_params
     adjust.delete(:destination_lat_lng)
-    # lat, lng = params[:schedule][:destination_lat_lng].delete("()").split(/,/)
     adjust[:destination_lat] = lat.to_f
     adjust[:destination_lng] = lng.to_f
+    # 待ち合わせ時間処理
     adjust[:meeting_time] = DateTime.parse(adjust[:meeting_time])
     return adjust
   end

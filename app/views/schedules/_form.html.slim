@@ -1,6 +1,7 @@
 .container
   .col-sm-6
     = form_with model: schedule, local: true do |f|
+      = render 'shared/error_messages', object: f.object
       .form-group
         = f.label :name
         = f.text_field :name, placeholder: "名前", size: "100x100"
