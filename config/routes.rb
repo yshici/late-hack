@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
   resources :schedules
   root 'home#index'
+
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end

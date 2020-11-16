@@ -52,10 +52,11 @@ class SchedulesController < ApplicationController
     lat, lng = schedule_params[:destination_lat_lng].delete("()").split(/,/)
     adjust = schedule_params
     adjust.delete(:destination_lat_lng)
+    # binding.pry
     adjust[:destination_lat] = lat.to_f
     adjust[:destination_lng] = lng.to_f
     # 待ち合わせ時間処理
-    adjust[:meeting_time] = DateTime.parse(adjust[:meeting_time])
+    adjust[:meeting_time] = Time.parse(adjust[:meeting_time])
     return adjust
   end
 end
