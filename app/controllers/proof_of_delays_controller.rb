@@ -16,11 +16,8 @@ class ProofOfDelaysController < ApplicationController
     lat, lng = @delay_info["destination_lat_lng"].delete("()").split(/,/)
     lat = lat.to_f
     lng = lng.to_f
-    @weather = ApiGet.new().weather(lat, lng)
-    @name_train_delay = ApiGet.new().train
-    @get_nhk = ApiGet.new().nhk
-    @get_restaurnt = ApiGet.new().restaurant(lat, lng)
-    @get_hotel = ApiGet.new().hotel(lat, lng)
+    @api_info = ApiGet.new().get_api.merge(ApiGet.new().get_api_with_position(lat, lng))
+    binding.pry
   end
 
 private
@@ -29,4 +26,3 @@ private
     params.require(:delay_info).permit(:name, :destination_name, :destination_lat_lng, :destination_address, :current_location, :meeting_time)
   end
 end
-
