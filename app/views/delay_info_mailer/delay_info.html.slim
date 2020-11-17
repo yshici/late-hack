@@ -1,7 +1,90 @@
-p てすとめーる
+/ = debug @api_info
 
-h1 てすとめーる
+.container
+  h1 精密な診断結果：
 
-= @schedule.name
+  h1 あなたはこの予定に3時間遅れることができます。
 
-= @schedule.user.name
+  p 目的地周辺の天気は"#{ @api_info[:weather][:name] }"です。
+
+  p こんな天気では遅刻も仕方ありません。
+
+  p 現在NHK総合では""#{@api_info[:nhk][:name]}"をやっています。
+
+  p こんな面白い番組があったのでは遅刻も仕方ないでしょう。
+
+  h1 相手に怒られた場合の対応
+
+  h1 言い訳
+
+  p 言い訳に使えそうな情報
+
+  p 現在遅延している路線は以下の通りです。
+
+  table.table
+    thead
+      tbody
+        tr
+          th scope="col"
+            th 路線名
+            th 運行会社
+        - @api_info[:train].each do |t|
+          tr
+            th scope="col"
+              td = t[:name]
+              td = t[:company]
+
+  p 近くの路線が遅延していれば積極的に言い訳に組み込みましょう。
+
+  h1 話をそらす
+
+  p 待ち合わせ場所に到着したら、まずは今話題のニュースについて語り始めて相手の気を紛らわせましょう
+
+  .card-deck.mb-3.text-center
+    - @api_info[:news].each do |news|
+      .card.mb-4.shadow-sm
+        .card-header
+          = link_to news[:title], news[:url]
+        .card-body
+          = image_tag news[:image], size: '100x100'
+          div
+            = news[:description]
+
+  h1 謝罪
+
+  p 遅刻のお詫びにはご飯を奢ると喜ばれます
+
+  p 周辺のお店をいますぐ予約しましょう
+
+  .card-deck.mb-3.text-center
+    - @api_info[:restaurant].each do |rest|
+      .card.mb-4.shadow-sm
+        .card-header
+          = link_to rest[:name], rest[:url]
+        .card-body
+          = image_tag rest[:image_url], size: '100x100'
+          div
+            = rest[:category]
+          div
+            = rest[:address]
+
+  <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
+  <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="102" height="26" border="0" alt="グルメ情報検索サイト　ぐるなび">
+  </a>
+
+
+  h1 今後の対策
+
+  p 遅刻癖のある人は数時間前から待ち合わせ場所近くにいるべきです。
+
+  p 周辺のホテルへ前日入りすると良いでしょう
+  .card-deck.mb-3.text-center
+    - @api_info[:hotel].each do |hotel|
+      .card.mb-4.shadow-sm
+        .card-header
+          = link_to hotel[:name], hotel[:url]
+        .card-body
+          = image_tag hotel[:image_url], size: '100x100'
+          div
+            = hotel[:address1]
+            = hotel[:address2]
