@@ -17,7 +17,6 @@ class ProofOfDelaysController < ApplicationController
     lat = lat.to_f
     lng = lng.to_f
     @api_info = ApiGet.new().get_api.merge(ApiGet.new().get_api_with_position(lat, lng))
-    binding.pry
   end
 
 private
