@@ -11,9 +11,7 @@ class TemporarySchedulesController < ApplicationController
 
   def show
     @schedule = session[:schedule]
-    lat, lng = @schedule["destination_lat_lng"].delete("()").split(/,/)
-    lat = lat.to_f
-    lng = lng.to_f
+    lat, lng = TemporarySchedule.new().adjust_latlng(@schedule["destination_lat_lng"])
     @api_info = ApiGet.new().get_api.merge(ApiGet.new().get_api_with_position(lat, lng))
   end
 
