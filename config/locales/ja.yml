@@ -1,12 +1,10 @@
 ja:
   activemodel:
     attributes:
-      delay_info:
-        name: '名前'
-        destination: '待ち合わせ場所'
-        lat_lng: '緯度経度'
-        current_location: '現在地'
-        meeting_time: '待ち合わせ時間'
+      temporary_schedule:
+        destination_name: '待ち合わせ場所'
+        destination_lat_lng: '待ち合わせ場所緯度経度'
+        destination_address: '待ち合わせ場所住所'
   activerecord:
     models:
       user: 'ユーザー'
