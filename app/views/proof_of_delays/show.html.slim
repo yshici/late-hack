@@ -1,34 +1,114 @@
-h1 精密な診断結果：
+= debug @api_info
 
-h1 あなたはこの予定に3時間遅れることができます。
+.container
+  h1 精密な診断結果：
 
-h1 目的地周辺の天気は "#{@weather}"です。
+  h1 あなたはこの予定に3時間遅れることができます。
 
-h1 こんな天気では遅刻も仕方ありません。
+  p 目的地周辺の天気は"#{ @api_info[:weather][:name] }"です。
 
-h1 テレビでは""#{@get_nhk}"をやっています。
+  p こんな天気では遅刻も仕方ありません。
 
-h1 こんな面白い番組があったので遅刻も仕方ないでしょう。
+  p テレビでは""#{@api_info[:nhk][:name]}"をやっています。
 
-h1 言い訳に使えそうな情報
+  p こんな面白い番組があったのでは遅刻も仕方ないでしょう。
 
-h1 現在遅延している路線は以下の通りです。
+  h1 待ち合わせ相手に怒られた時のテクニック
 
-- @name_train_delay.each do |t|
-  h1 = t
+  h1 言い訳
 
-h1 近くの路線が遅延していれば積極的に言い訳に組み込みましょう。
+  p 言い訳に使えそうな情報
 
-h1 遅刻のお詫びにはご飯を奢ると喜ばれます
+  p 現在遅延している路線は以下の通りです。
 
-h1 周辺のお店をいますぐ予約しましょう"#{@get_restaurnt[:name]}"
+  table.table
+    thead
+      tbody
+        tr
+          th scope="col"
+            th 路線名
+            th 運行会社
+        - @api_info[:train].each do |t|
+          tr
+            th scope="col"
+              td = t[:name]
+              td = t[:company]
 
-h1 "#{@get_restaurnt[:url]}"
+  p 近くの路線が遅延していれば積極的に言い訳に組み込みましょう。
 
-h1 今後の対策
+  h1 謝罪
 
-h1 遅刻癖のある人は数時間前から待ち合わせ場所近くにいるべきです。
+  p 遅刻のお詫びにはご飯を奢ると喜ばれます
 
-h1 できれば前日入りすると良いでしょう
+  p 周辺のお店をいますぐ予約しましょう
 
-h1 "#{@get_hotel[:name]}"
+  .card-deck.mb-3.text-center
+    - @api_info[:restaurant].each do |rest|
+      .card.mb-4.shadow-sm
+        .card-header
+          = link_to rest[:name], rest[:url]
+        .card-body
+          = image_tag rest[:image_url], size: '100x100'
+          div
+            = rest[:category]
+          div
+            = rest[:address]
+
+  <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
+  <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="102" height="26" border="0" alt="グルメ情報検索サイト　ぐるなび">
+  </a>
+
+
+  h1 今後の対策
+
+  p 遅刻癖のある人は数時間前から待ち合わせ場所近くにいるべきです。
+
+  p 周辺のホテルへ前日入りすると良いでしょう
+  .container
+    .card-deck.mb-3.text-center
+      - @api_info[:hotel].each do |hotel|
+        .card.mb-4.shadow-sm
+          .card-header
+            = link_to hotel[:name], hotel[:url]
+          .card-body
+            = image_tag hotel[:image_url], size: '100x100'
+            div
+              = hotel[:address1]
+              = hotel[:address2]
+
+
+/ => {:train=>{:name=>["青梅線", "小湊鉄道線", "島原鉄道線", "特急ラピート", "特急サザン", "山陰本線", "", "阿武隈急行線"]},
+/  :nhk=>{:name=>"チコちゃんに叱られる！チコっとだけスペシャル「民謡の“はあー”って何？」"},
+/  :weather=>{:name=>"薄い雲"},
+/  :restaurant=>
+/   [{:name=>"天ぷらガーデン はないち",
+/     :category=>"天ぷら",
+/     :url=>"https://r.gnavi.co.jp/sdmnm9t00000/?ak=a3HdIr1sUvHHYrn%2B9EO8ZeDZRFV0NBzvzEWd6DgcJQY%3D",
+/     :image_url=>nil,
+/     :address=>"〒150-0022 東京都渋谷区恵比寿南1-23-5 "},
+/    {:name=>"串焼ダイニング 十兵衛",
+/     :category=>"串焼き",
+/     :url=>"https://r.gnavi.co.jp/b9bd5z8p0000/?ak=a3HdIr1sUvHHYrn%2B9EO8ZeDZRFV0NBzvzEWd6DgcJQY%3D",
+/     :image_url=>nil,
+/     :address=>"〒150-0022 東京都渋谷区恵比寿南1-23-5 "},
+/    {:name=>"ローカルインディア 恵比寿店",
+/     :category=>"インド料理ダイニング",
+/     :url=>"https://r.gnavi.co.jp/g848900/?ak=a3HdIr1sUvHHYrn%2B9EO8ZeDZRFV0NBzvzEWd6DgcJQY%3D",
+/     :image_url=>nil,
+/     :address=>"〒150-0022 東京都渋谷区恵比寿南1-23-8 アメリカンブリッジビル2F"}],
+/  :hotel=>
+/   [{:name=>"恵比寿ホリックホテル",
+/     :url=>"https://img.travel.rakuten.co.jp/image/tr/api/hs/dQ4dX/?f_no=167308",
+/     :image_url=>"https://img.travel.rakuten.co.jp/share/HOTEL/167308/167308.jpg",
+/     :address1=>"東京都",
+/     :address2=>"〒150-0022　渋谷区恵比寿南1-16-8　"},
+/    {:name=>"Ｂｏｕｔｉｑｕｅ　Ｈｏｕｓｅ・Ｅｂｉｓｕ　Ｈｉｄｅａｗａｙ",
+/     :url=>"https://img.travel.rakuten.co.jp/image/tr/api/hs/dQ4dX/?f_no=180722",
+/     :image_url=>"https://img.travel.rakuten.co.jp/share/HOTEL/180722/180722.jpg",
+/     :address1=>"東京都",
+/     :address2=>"目黒区三田2-4-15"},
+/    {:name=>"ウェスティンホテル東京",
+/     :url=>"https://img.travel.rakuten.co.jp/image/tr/api/hs/dQ4dX/?f_no=7536",
+/     :image_url=>"https://img.travel.rakuten.co.jp/share/HOTEL/7536/7536.jpg",
+/     :address1=>"東京都",
+/     :address2=>"目黒区三田1-4-1 恵比寿ガーデンプレイス内"}]}
