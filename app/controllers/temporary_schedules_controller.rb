@@ -5,8 +5,15 @@ class TemporarySchedulesController < ApplicationController
   end
 
   def create
-    session[:schedule] = TemporarySchedule.new(schedule_params)
-    redirect_to temporary_schedules_path
+    @schedule = TemporarySchedule.new(schedule_params)
+    # binding.pry
+    if @schedule.valid?
+      session[:schedule] = @schedule
+      redirect_to temporary_schedules_path
+    else
+      flash.now[:danger] = '待ち合わせ場所が入力できていません'
+      render action: :new
+    end
   end
 
   def show

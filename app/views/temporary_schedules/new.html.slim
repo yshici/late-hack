@@ -3,6 +3,7 @@
 
   .col-sm-6
     = form_with model: @schedule, url: temporary_schedules_path, local: true do |f|
+      = render 'shared/error_messages', object: f.object
       .form-group
         = f.label :destination_name
         = f.text_field :destination_name, id: "data-place-name", placeholder: "マップから選択して下さい", size: "100x100"
@@ -14,4 +15,4 @@
         - google_api_place = "https://maps.googleapis.com/maps/api/js?key=#{ Rails.application.credentials.api_key[:google_maps] }&libraries=places&callback=initMap".html_safe
         script{ async src = google_api_place }
 
-      = f.button '登録する', type: 'button', onclick: 'submit();', class: %w[btn btn-primary]
+      = f.button '送信', type: 'button', onclick: 'submit();', class: %w[btn btn-primary]
