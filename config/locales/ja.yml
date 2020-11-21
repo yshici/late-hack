@@ -24,7 +24,7 @@ ja:
         destination_lat: '緯度'
         destination_lang: '経度'
         description: '概要'
- date:
+  date:
     abbr_day_names:
     - 日
     - 月
