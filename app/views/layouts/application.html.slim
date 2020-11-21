@@ -8,10 +8,11 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    - if current_user
-      = render 'shared/header'
-    - else
-      = render 'shared/before_login_header'
+    - unless current_page?(root_path)
+      - if current_user
+        = render 'shared/header'
+      - else
+        = render 'shared/before_login_header'
     = render 'shared/flash_message'
     = yield
     = render 'shared/footer'
