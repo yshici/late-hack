@@ -11,14 +11,10 @@
         div#datetimepicker13
       .form-group
         = f.label :destination_address
+        = render 'shared/map'
         = f.text_field :destination_name, id: "data-place-name", placeholder: "マップから選択して下さい", size: "100x100"
         = f.text_field :destination_address, id: "data-place-address", type: "hidden"
         = f.text_field :destination_lat_lng, id: "data-place-location", type: "hidden"
-        div#map
-        input id="pac-input" class="controls" type="text" placeholder="Search Box"
-
-        - google_api_place = "https://maps.googleapis.com/maps/api/js?key=#{ Rails.application.credentials.api_key[:google_maps] }&libraries=places&callback=initMap".html_safe
-        script{ async src = google_api_place }
       .form-group
         = f.label :description
         = f.text_area :description, class:'form-control'
