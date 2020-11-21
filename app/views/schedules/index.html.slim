@@ -1,8 +1,10 @@
-= link_to 'スケジュール登録', new_schedule_path
+.container
+  .text-center
+    = link_to '新しい予定を登録する', new_schedule_path
 
 
-= month_calendar events: @schedules do |date, schedules|
-  = date
-  - schedules.each do |schedule|
-    div
-      = link_to schedule.name, schedule_path(schedule), class: 'btn btn-primary'
+  = month_calendar events: @schedules do |date, schedules|
+    h1 = date.strftime("%-d")
+    - schedules.each do |schedule|
+      div
+        = link_to schedule.name, schedule_path(schedule), class: 'calendar-schedule'

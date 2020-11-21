@@ -2,7 +2,7 @@ class SchedulesController < ApplicationController
   before_action :set_schedule, only: %i[show edit update destroy]
 
   def index
-    @schedules = Schedule.all
+    @schedules = current_user.schedules.all
   end
 
   def new
