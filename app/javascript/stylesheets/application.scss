@@ -1,2 +1,19 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~tempusdominus-bootstrap-4/src/sass/tempusdominus-bootstrap-4-build";
+
+body {
+  background-color: beige;
+}
+header {
+  background-color: palegoldenrod;
+}
+
+.form-btn {
+  display: inline-block;
+  padding: 7px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  color: #FFF;
+  background-color: burlywood;
+//   background-image: linear-gradient(45deg, #FFC107 0%, #ff8b5f 100%);
+}
