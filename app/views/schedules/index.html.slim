@@ -1,10 +1,9 @@
 .container
   .text-center
-    = link_to '新しい予定を登録する', new_schedule_path
-
+    = link_to '新しい予定を登録する', new_schedule_path, class: "h2 form-btn"
 
   = month_calendar events: @schedules do |date, schedules|
-    h1 = date.strftime("%-d")
+    h2 = date.strftime("%-d")
     - schedules.each do |schedule|
-      div
-        = link_to schedule.name, schedule_path(schedule), class: 'calendar-schedule'
+      .calendar-schedule
+        = link_to schedule.name, schedule_path(schedule), class: "text-dark"
