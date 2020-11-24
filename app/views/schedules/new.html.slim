@@ -1,1 +1,5 @@
-= render partial: 'form', locals: {schedule: @schedule}
+.container
+  h1.border-bottom.border-gray 予定を入力してください
+  .row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
+    .pt-3.center-block.text-center
+      = render partial: 'form', locals: {schedule: @schedule}
