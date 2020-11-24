@@ -1,21 +1,27 @@
-table.table
-  thead
-    tbody
-      tr
-        th scope="col"
-          td = Schedule.human_attribute_name(:name)
-          td = @schedule.name
-      tr
-        th scope="col"
-          td = Schedule.human_attribute_name(:meeting_time)
-          td = l @schedule.meeting_time, format: :long
-      tr
-        th scope="col"
-          td = Schedule.human_attribute_name(:destination_name)
-          td = @schedule.destination_name
-      tr
-        th scope="col"
-          td = Schedule.human_attribute_name(:description)
-          td = @schedule.description
-= link_to '編集', edit_schedule_path(@schedule)
-= link_to '削除', schedule_path(@schedule), method: :delete, data: { confirm: '削除しますか？' }
+.container
+  h1.border-bottom.border-gray スケジュール詳細
+  .row
+    .bg-white.shadow-sm.rounded-lg.border.col-md-10.offset-md-2.col-lg-8
+      .py-5.mx-5.center-block.text-center
+        table.table
+          thead
+            tbody
+              tr
+                th scope="col"
+                  td = Schedule.human_attribute_name(:name)
+                  td = @schedule.name
+              tr
+                th scope="col"
+                  td = Schedule.human_attribute_name(:meeting_time)
+                  td = l @schedule.meeting_time, format: :long
+              tr
+                th scope="col"
+                  td = Schedule.human_attribute_name(:destination_name)
+                  td = @schedule.destination_name
+              tr
+                th scope="col"
+                  td = Schedule.human_attribute_name(:description)
+                  td = @schedule.description
+  .mt-5.text-center
+    = link_to '編集', edit_schedule_path(@schedule), class: "link-btn mr-5"
+    = link_to '削除', schedule_path(@schedule), method: :delete, data: { confirm: '削除しますか？' }, class: "link-btn ml-5"

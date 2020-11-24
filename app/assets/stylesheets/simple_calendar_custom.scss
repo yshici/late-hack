@@ -1,7 +1,8 @@
 .simple-calendar {
   background-color: white;
 
-  .day { border: solid 1px gray;
+  .day {
+    border: solid 1px gray;
     background-color: white;
   }
 
@@ -34,7 +35,7 @@
     text-align: center;
     position: relative;
     .calendar-title{
-      font-size: 40px;
+      // font-size: 40px;
       text-align: center;
     }
     .previous-month-btn{

@@ -1,10 +1,11 @@
-nav.navbar.navbar-expand-lg.navbar-light.bg-white
-  .collapse.navbar-collapse
-    ul.navbar-nav.mr-auto
-      li.nav-item
-        = link_to 'スケジュール一覧', schedules_path, class: 'navbar-brand'
-    ul.navbar-nav
-      li.nav-item
-        = link_to current_user.name, user_path(current_user), class: 'navbar-brand'
-      li.nav-item
-        = link_to 'ログアウト', logout_path, method: :delete, class: 'navbar-brand'
+header
+  nav.navbar.navbar-expand-lg.navbar-light
+    .collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+        li.nav-item
+          = link_to 'スケジュール一覧', schedules_path, class: 'navbar-brand'
+      ul.navbar-nav
+        li.nav-item
+          = link_to current_user.name, user_path(current_user), class: 'navbar-brand'
+        li.nav-item
+          = link_to 'ログアウト', logout_path, method: :delete, class: 'navbar-brand'

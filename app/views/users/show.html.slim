@@ -1,16 +1,22 @@
-table.table
-  thead
-    tbody
-      tr
-        th scope="col"
-          td = User.human_attribute_name(:name)
-          td = current_user.name
-      tr
-        th scope="col"
-          td = User.human_attribute_name(:email)
-          td = current_user.email
-      tr
-        th scope="col"
-          td = User.human_attribute_name(:created_at)
-          td = l current_user.created_at, format: :long
-= link_to '編集', edit_user_path(current_user)
+.container
+  h1.border-bottom.border-gray 登録情報
+  .row
+    .bg-white.shadow-sm.rounded-lg.border.col-md-10.offset-md-2.col-lg-8
+      .py-5.mx-5.center-block.text-center
+        table.table
+          thead
+            tbody
+              tr
+                th scope="col"
+                  td = User.human_attribute_name(:name)
+                  td = current_user.name
+              tr
+                th scope="col"
+                  td = User.human_attribute_name(:email)
+                  td = current_user.email
+              tr
+                th scope="col"
+                  td = User.human_attribute_name(:created_at)
+                  td = l current_user.created_at, format: :long
+  .mt-5.text-center
+    = link_to '登録情報を編集', edit_user_path(current_user), class: "link-btn"

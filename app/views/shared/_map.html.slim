@@ -1,0 +1,5 @@
+div#map
+input id="pac-input" class="controls" type="text" placeholder="Search Box"
+
+- google_api_place = "https://maps.googleapis.com/maps/api/js?key=#{ Rails.application.credentials.api_key[:google_maps] }&libraries=places&callback=initMap".html_safe
+script{ async src = google_api_place }
