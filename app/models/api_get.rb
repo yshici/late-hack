@@ -59,8 +59,8 @@ class ApiGet
     end
 
     # 楽天トラベル api取得
-    rakuten_hotel_api_key = Rails.application.credentials.api_key[:hotel_rakuten]
-    rakuten_hotel_url = "https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?format=json&datumType=1&latitude=#{ lat }&longitude=#{ lng }&applicationId=#{ rakuten_hotel_api_key }"
+    rakuten_api_key = Rails.application.credentials.api_key[:rakuten]
+    rakuten_hotel_url = "https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?format=json&datumType=1&latitude=#{ lat }&longitude=#{ lng }&applicationId=#{ rakuten_api_key }"
     begin
       response_hotel = open(rakuten_hotel_url)
       hotel_rakuten = JSON.parse(response_hotel.read)
@@ -72,6 +72,15 @@ class ApiGet
       get[:hotel] = get_hotel
     rescue
       get[:hotel] = nil
+      # 楽天商品ランキングAPI取得
+      rakuten_tent_url = "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20170628?format=json&genreId=302373&applicationId=#{ rakuten_api_key }"
+      response_tent = open(rakuten_tent_url)
+      tent_rakuten = JSON.parse(response_tent.read)
+      get_tent = []
+      tent_rakuten["Items"].first(3).each do |tent|
+        get_tent << { name: tent["Item"]["itemName"], url: tent["Item"]["itemUrl"], image_url: tent["Item"]["smallImageUrls"][0]["imageUrl"], price: tent["Item"]["itemPrice"], score: tent["Item"]["reviewAverage"] }
+      end
+      get[:tent] = get_tent
     end
     get
   end

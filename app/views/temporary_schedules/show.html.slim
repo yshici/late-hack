@@ -93,4 +93,15 @@
                   = hotel[:address1]
                   = hotel[:address2]
       - else
-        p ・・・周辺にホテルは無いようです。野宿しましょう。
+        p ・・・周辺にホテルは無いようです。テントを買って野宿しましょう。
+        .card-deck.mb-3.text-center
+          - @api_info[:tent].each do |tent|
+            .card.mb-4.shadow-sm
+              .card-header
+                = link_to tent[:name], tent[:url]
+              .card-body
+                = image_tag tent[:image_url], size: '100x100'
+                div
+                  = number_to_currency(tent[:price])
+                div
+                  p レビュー評価： #{tent[:score]}点
