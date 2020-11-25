@@ -56,22 +56,24 @@
       p 遅刻のお詫びにはご飯を奢ると喜ばれます
 
       p 周辺のお店をいますぐ予約しましょう
+      - if @api_info[:restaurant]
+        .card-deck.mb-3.text-center
+          - @api_info[:restaurant].each do |rest|
+            .card.mb-4.shadow-sm
+              .card-header
+                = link_to rest[:name], rest[:url]
+              .card-body
+                = image_tag rest[:image_url], size: '100x100'
+                div
+                  = rest[:category]
+                div
+                  = rest[:address]
 
-      .card-deck.mb-3.text-center
-        - @api_info[:restaurant].each do |rest|
-          .card.mb-4.shadow-sm
-            .card-header
-              = link_to rest[:name], rest[:url]
-            .card-body
-              = image_tag rest[:image_url], size: '100x100'
-              div
-                = rest[:category]
-              div
-                = rest[:address]
-
-      <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
-      <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="102" height="26" border="0" alt="グルメ情報検索サイト　ぐるなび">
-      </a>
+        <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
+        <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="102" height="26" border="0" alt="グルメ情報検索サイト　ぐるなび">
+        </a>
+      - else
+        p ・・・周辺に飲食店は無いようです。
 
 
       h1 今後の対策
@@ -79,13 +81,16 @@
       p 遅刻癖のある人は数時間前から待ち合わせ場所近くにいるべきです。
 
       p 周辺のホテルへ前日入りすると良いでしょう
-      .card-deck.mb-3.text-center
-        - @api_info[:hotel].each do |hotel|
-          .card.mb-4.shadow-sm
-            .card-header
-              = link_to hotel[:name], hotel[:url]
-            .card-body
-              = image_tag hotel[:image_url], size: '100x100'
-              div
-                = hotel[:address1]
-                = hotel[:address2]
+      - if @api_info[:hotel]
+        .card-deck.mb-3.text-center
+          - @api_info[:hotel].each do |hotel|
+            .card.mb-4.shadow-sm
+              .card-header
+                = link_to hotel[:name], hotel[:url]
+              .card-body
+                = image_tag hotel[:image_url], size: '100x100'
+                div
+                  = hotel[:address1]
+                  = hotel[:address2]
+      - else
+        p ・・・周辺にホテルは無いようです。野宿しましょう。
