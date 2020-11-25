@@ -2,7 +2,10 @@ function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 35.6581, lng: 139.7017 },
     zoom: 14,
-    mapTypeId: "roadmap",
+    mapId: "roadmap",
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false,
   });
   // 検索ボックスを作成
   const input = document.getElementById("pac-input");
@@ -63,7 +66,6 @@ function initMap() {
   // マップ上のデフォルトで表示されるアイコンをクリックすると発火
   map.addListener( "click", function ( argument ) {
     if (argument.placeId) {
-      console.log( argument )
       var placeId = argument.placeId;
       var service = new google.maps.places.PlacesService(map);
       service.getDetails({
