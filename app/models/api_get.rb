@@ -13,6 +13,13 @@ class ApiGet
       name_train_delay << { name: t["name"], company: t["company"] }
     end
     get = { train: name_train_delay }
+    # puts get[:train]
+    # 長期運休等も拾っているので消す。たまにチェック必要。
+    # 取得元サイト https://www.tetsudo.com/traffic/
+    ignore_train = ["小湊鉄道線", "富士急行", "島原鉄道線", "特急ラピート", "特急サザン", "阿武隈急行線"]
+    get[:train].delete_if do |train|
+      ignore_train.include?(train[:name])
+    end
 
     # NHK番組表 api取得
     nhk_program_api_key = Rails.application.credentials.api_key[:nhk_program]
