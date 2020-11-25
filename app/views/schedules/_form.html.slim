@@ -9,9 +9,8 @@
     div#datetimepicker13
   .form-group.mb-5
     = f.label :destination_address, class: 'control-label pull-left'
-    div
-      = render 'shared/map'
-    = f.text_field :destination_name, id: "data-place-name", placeholder: "マップから選択して下さい", size: "100x100", readonly: true
+    = render 'shared/map'
+    = f.text_field :destination_name, id: "data-place-name", placeholder: "マップから選択して下さい", size: "100x100", readonly: true, class: "form-control mt-5"
     = f.text_field :destination_address, id: "data-place-address", type: "hidden"
     = f.text_field :destination_lat_lng, id: "data-place-location", type: "hidden"
   .form-group.mb-5
