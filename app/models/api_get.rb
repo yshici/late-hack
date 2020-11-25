@@ -35,15 +35,16 @@ class ApiGet
   end
 
   def get_api_with_position(lat, lng)
-    # open weather api取得
+    rakuten_api_key = Rails.application.credentials.api_key[:rakuten]
     open_weather_api_key = Rails.application.credentials.api_key[:open_weather]
+    restaurant_api_key = Rails.application.credentials.api_key[:restaurant_gurunavi]
+    # open weather api取得
     open_weather_url = "https://api.openweathermap.org/data/2.5/onecall?lat=#{ lat }&lon=#{ lng }&exclude=hourly,daily&units=metric&lang=ja&appid=#{ open_weather_api_key }"
     response_weather = open(open_weather_url)
     result_weather = JSON.parse(response_weather.read)
     get = { weather: { name: result_weather["current"]["weather"][0]["description"] } }
 
     # ぐるなび api取得
-    restaurant_api_key = Rails.application.credentials.api_key[:restaurant_gurunavi]
     restaurant_url = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=#{ restaurant_api_key }&latitude=#{ lat }&longitude=#{ lng }"
     begin
       response_restaurant = open(restaurant_url)
@@ -56,6 +57,15 @@ class ApiGet
       get[:restaurant] = get_restaurant
     rescue
       get[:restaurant] = nil
+      # 楽天商品ランキングAPI（ハム）取得
+      rakuten_ham_url = "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20170628?format=json&genreId=100228&applicationId=#{ rakuten_api_key }"
+      response_ham = open(rakuten_ham_url)
+      ham_rakuten = JSON.parse(response_ham.read)
+      get_ham = []
+      ham_rakuten["Items"].first(3).each do |ham|
+        get_ham << { name: ham["Item"]["itemName"], url: ham["Item"]["itemUrl"], image_url: ham["Item"]["smallImageUrls"][0]["imageUrl"], price: ham["Item"]["itemPrice"], score: ham["Item"]["reviewAverage"] }
+      end
+      get[:ham] = get_ham
     end
 
     # 楽天トラベル api取得
@@ -72,7 +82,7 @@ class ApiGet
       get[:hotel] = get_hotel
     rescue
       get[:hotel] = nil
-      # 楽天商品ランキングAPI取得
+      # 楽天商品ランキングAPI（テント）取得
       rakuten_tent_url = "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20170628?format=json&genreId=302373&applicationId=#{ rakuten_api_key }"
       response_tent = open(rakuten_tent_url)
       tent_rakuten = JSON.parse(response_tent.read)

@@ -73,14 +73,24 @@
         <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="102" height="26" border="0" alt="グルメ情報検索サイト　ぐるなび">
         </a>
       - else
-        p ・・・周辺に飲食店は無いようです。
-
+        p ・・・周辺に飲食店は無いようです。ハムを買ってお詫びしましょう。
+        .card-deck.mb-3.text-center
+          - @api_info[:ham].each do |ham|
+            .card.mb-4.shadow-sm
+              .card-header
+                = link_to ham[:name], ham[:url]
+              .card-body
+                = image_tag ham[:image_url], size: '100x100'
+                div
+                  = number_to_currency(ham[:price])
+                div
+                  p レビュー評価： #{ ham[:score] }点
 
       h1 今後の対策
 
       p 遅刻癖のある人は数時間前から待ち合わせ場所近くにいるべきです。
 
-      p 周辺のホテルへ前日入りすると良いでしょう
+      p 周辺のホテルへ前日入りすると良いでしょう。
       - if @api_info[:hotel]
         .card-deck.mb-3.text-center
           - @api_info[:hotel].each do |hotel|
@@ -104,4 +114,4 @@
                 div
                   = number_to_currency(tent[:price])
                 div
-                  p レビュー評価： #{tent[:score]}点
+                  p レビュー評価： #{ tent[:score] }点
