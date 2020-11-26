@@ -5,12 +5,15 @@
   .row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
     .pt-3.center-block
       h1 あなたはこの予定に3時間遅れることができます。
-
-      p 目的地周辺の天気は"#{ @api_info[:weather][:name] }"です。
-
-      p こんな天気では遅刻も仕方ありません。
-
-      p 現在NHK総合では""#{@api_info[:nhk][:name]}"をやっています。
+      - if @api_info[:weather]
+        p 目的地周辺の天気は"#{ @api_info[:weather][:name] }"です。
+        p こんな天気では遅刻も仕方ありません。
+      -else
+        p 天気情報が取得できませんでした。
+      - if @api_info[:nhk]
+        p 現在NHK総合では""#{@api_info[:nhk][:name]}"をやっています。
+      - else
+        p 番組表が取得できませんでした。
 
       p こんな面白い番組があったのでは遅刻も仕方ないでしょう。
 
@@ -18,74 +21,123 @@
 
       h1 言い訳
 
-      p 言い訳に使えそうな情報
+      p 近くの路線が遅延していれば積極的に言い訳に組み込みましょう。
 
-      p 現在遅延している路線は以下の通りです。
-
-      table.table
-        thead
-          tbody
-            tr
-              th scope="col"
-                th 路線名
-                th 運行会社
-            - @api_info[:train].each do |t|
+      - if @api_info[:train]
+        p 現在遅延している路線は以下の通りです。
+        table.table
+          thead
+            tbody
               tr
                 th scope="col"
-                  td = t[:name]
-                  td = t[:company]
-
-      p 近くの路線が遅延していれば積極的に言い訳に組み込みましょう。
+                  th 路線名
+                  th 運行会社
+              - @api_info[:train].each do |t|
+                tr
+                  th scope="col"
+                    td = t[:name]
+                    td = t[:company]
+      - else
+        p ・・・現在遅延している列車はなさそうです。言い訳では使わないようにしましょう。
 
       h1 話をそらす
 
       p 待ち合わせ場所に到着したら、まずは今話題のニュースについて語り始めて相手の気を紛らわせましょう
-
-      .card-deck.mb-3.text-center
-        - @api_info[:news].each do |news|
-          .card.mb-4.shadow-sm
-            .card-header
-              = link_to news[:title], news[:url]
-            .card-body
-              = image_tag news[:image], size: '100x100'
-              div
-                = news[:description]
+      - if @api_info[:news]
+        .card-deck.mb-3.text-center
+          - @api_info[:news].each do |news|
+            .card.mb-4.shadow-sm
+              .card-header
+                = link_to news[:title], news[:url]
+              .card-body
+                - if news[:image]
+                  = image_tag news[:image], size: '100x100'
+                - else
+                  = image_tag 'no_image.jpg', size: '100x100'
+                div
+                  = news[:description]
+      - else
+        p ニュースが取得できませんでした。
 
       h1 謝罪
 
       p 遅刻のお詫びにはご飯を奢ると喜ばれます
 
       p 周辺のお店をいますぐ予約しましょう
+      - if @api_info[:restaurant]
+        .card-deck.mb-3.text-center
+          - @api_info[:restaurant].each do |rest|
+            .card.mb-4.shadow-sm
+              .card-header
+                = link_to rest[:name], rest[:url]
+              .card-body
+                - if rest[:image_url]
+                  = image_tag rest[:image_url], size: '100x100'
+                - else
+                  = image_tag 'no_image.jpg', size: '100x100'
+                div
+                  = rest[:category]
+                div
+                  = rest[:address]
 
-      .card-deck.mb-3.text-center
-        - @api_info[:restaurant].each do |rest|
-          .card.mb-4.shadow-sm
-            .card-header
-              = link_to rest[:name], rest[:url]
-            .card-body
-              = image_tag rest[:image_url], size: '100x100'
-              div
-                = rest[:category]
-              div
-                = rest[:address]
-
-      <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
-      <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="102" height="26" border="0" alt="グルメ情報検索サイト　ぐるなび">
-      </a>
-
+        <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
+        <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="102" height="26" border="0" alt="グルメ情報検索サイト　ぐるなび">
+        </a>
+      - else
+        p ・・・周辺に飲食店は無いようです。ハムを買ってお詫びしましょう。
+        - if @api_info[:ham]
+          .card-deck.mb-3.text-center
+            - @api_info[:ham].each do |ham|
+              .card.mb-4.shadow-sm
+                .card-header
+                  = link_to ham[:name], ham[:url]
+                .card-body
+                  - if ham[:image_url]
+                    = image_tag ham[:image_url], size: '100x100'
+                  - else
+                    = image_tag 'no_image.jpg', size: '100x100'
+                  div
+                    = number_to_currency(ham[:price])
+                  div
+                    p レビュー評価： #{ ham[:score] }点
+        - else
+          p ・・・・・・飲食店もハムも情報を取得できませんでした。
 
       h1 今後の対策
 
       p 遅刻癖のある人は数時間前から待ち合わせ場所近くにいるべきです。
 
-      p 周辺のホテルへ前日入りすると良いでしょう
-      .card-deck.mb-3.text-center
-        - @api_info[:hotel].each do |hotel|
-          .card.mb-4.shadow-sm
-            .card-header
-              = link_to hotel[:name], hotel[:url]
-            .card-body
-              = image_tag hotel[:image_url], size: '100x100'
-              div
-                = hotel[:address1]
-                = hotel[:address2]
+      p 周辺のホテルへ前日入りすると良いでしょう。
+      - if @api_info[:hotel]
+        .card-deck.mb-3.text-center
+          - @api_info[:hotel].each do |hotel|
+            .card.mb-4.shadow-sm
+              .card-header
+                = link_to hotel[:name], hotel[:url]
+              .card-body
+                - if hotel[:image_url]
+                  = image_tag hotel[:image_url], size: '100x100'
+                - else
+                  = image_tag 'no_image.jpg', size: '100x100'
+                div
+                  = hotel[:address1]
+                  = hotel[:address2]
+      - else
+        p ・・・周辺にホテルは無いようです。テントを買って野宿しましょう。
+        - if @api_info[:tent]
+          .card-deck.mb-3.text-center
+            - @api_info[:tent].each do |tent|
+              .card.mb-4.shadow-sm
+                .card-header
+                  = link_to tent[:name], tent[:url]
+                .card-body
+                  - if tent[:image_url]
+                    = image_tag tent[:image_url], size: '100x100'
+                  - else
+                    = image_tag 'no_image.jpg', size: '100x100'
+                  div
+                    = number_to_currency(tent[:price])
+                  div
+                    p レビュー評価： #{ tent[:score] }点
+        - else
+          p ・・・・・・ホテルもテントも情報を取得できませんでした。
