@@ -7,7 +7,6 @@ class ApiGet
     # 鉄道遅延情報 api取得
     train_delay_url = "https://tetsudo.rti-giken.jp/free/delay.json"
     begin
-      raise
       response_train = open(train_delay_url)
       train_delay = JSON.parse(response_train.read)
       name_train_delay = []
@@ -29,20 +28,28 @@ class ApiGet
     # NHK番組表 api取得
     nhk_program_api_key = Rails.application.credentials.api_key[:nhk_program]
     nhk_program_url = "https://api.nhk.or.jp/v2/pg/now/130/g1.json?key=#{ nhk_program_api_key }"
-    response_nhk = open(nhk_program_url)
-    nhk_program = JSON.parse(response_nhk.read)
-    get[:nhk] = { name: nhk_program["nowonair_list"]["g1"]["previous"]["title"] }
+    begin
+      response_nhk = open(nhk_program_url)
+      nhk_program = JSON.parse(response_nhk.read)
+      get[:nhk] = { name: nhk_program["nowonair_list"]["g1"]["previous"]["title"] }
+    rescue
+      get[:nhk] = nil
+    end
 
     # news api取得
     news_api_key = Rails.application.credentials.api_key[:news]
     news_url = "https://newsapi.org/v2/top-headlines?country=jp&apiKey=#{ news_api_key }"
-    response_news = open(news_url)
-    news = JSON.parse(response_news.read)
-    get_news = []
-    news["articles"].first(5).each do |article|
-      get_news << { title: article["title"], description: article["description"], url: article["url"], image: article["urlToImage"] }
+    begin
+      response_news = open(news_url)
+      news = JSON.parse(response_news.read)
+      get_news = []
+      news["articles"].first(5).each do |article|
+        get_news << { title: article["title"], description: article["description"], url: article["url"], image: article["urlToImage"] }
+      end
+      get[:news] = get_news
+    rescue
+      get[:news] = nil
     end
-    get[:news] = get_news
     get
   end
 
@@ -52,9 +59,13 @@ class ApiGet
     restaurant_api_key = Rails.application.credentials.api_key[:restaurant_gurunavi]
     # open weather api取得
     open_weather_url = "https://api.openweathermap.org/data/2.5/onecall?lat=#{ lat }&lon=#{ lng }&exclude=hourly,daily&units=metric&lang=ja&appid=#{ open_weather_api_key }"
-    response_weather = open(open_weather_url)
-    result_weather = JSON.parse(response_weather.read)
-    get = { weather: { name: result_weather["current"]["weather"][0]["description"] } }
+    begin
+      response_weather = open(open_weather_url)
+      result_weather = JSON.parse(response_weather.read)
+      get = { weather: { name: result_weather["current"]["weather"][0]["description"] } }
+    rescue
+      get = { weather: nil }
+    end
 
     # ぐるなび api取得
     restaurant_url = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=#{ restaurant_api_key }&latitude=#{ lat }&longitude=#{ lng }"

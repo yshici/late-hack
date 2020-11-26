@@ -5,12 +5,15 @@
   .row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
     .pt-3.center-block
       h1 あなたはこの予定に3時間遅れることができます。
-
-      p 目的地周辺の天気は"#{ @api_info[:weather][:name] }"です。
-
-      p こんな天気では遅刻も仕方ありません。
-
-      p 現在NHK総合では""#{@api_info[:nhk][:name]}"をやっています。
+      - if @api_info[:weather]
+        p 目的地周辺の天気は"#{ @api_info[:weather][:name] }"です。
+        p こんな天気では遅刻も仕方ありません。
+      -else
+        p 天気情報が取得できませんでした。
+      - if @api_info[:nhk]
+        p 現在NHK総合では""#{@api_info[:nhk][:name]}"をやっています。
+      - else
+        p 番組表が取得できませんでした。
 
       p こんな面白い番組があったのでは遅刻も仕方ないでしょう。
 
@@ -40,17 +43,19 @@
       h1 話をそらす
 
       p 待ち合わせ場所に到着したら、まずは今話題のニュースについて語り始めて相手の気を紛らわせましょう
-
-      .card-deck.mb-3.text-center
-        - @api_info[:news].each do |news|
-          .card.mb-4.shadow-sm
-            .card-header
-              = link_to news[:title], news[:url]
-            - if news[:image]
-              .card-body
-                = image_tag news[:image], size: '100x100'
-              div
-                = news[:description]
+      - if @api_info[:news]
+        .card-deck.mb-3.text-center
+          - @api_info[:news].each do |news|
+            .card.mb-4.shadow-sm
+              .card-header
+                = link_to news[:title], news[:url]
+              - if news[:image]
+                .card-body
+                  = image_tag news[:image], size: '100x100'
+                div
+                  = news[:description]
+      - else
+        p ニュースが取得できませんでした。
 
       h1 謝罪
 
