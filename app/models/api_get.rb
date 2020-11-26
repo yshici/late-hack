@@ -6,19 +6,24 @@ class ApiGet
   def get_api
     # 鉄道遅延情報 api取得
     train_delay_url = "https://tetsudo.rti-giken.jp/free/delay.json"
-    response_train = open(train_delay_url)
-    train_delay = JSON.parse(response_train.read)
-    name_train_delay = []
-    train_delay.map do |t|
-      name_train_delay << { name: t["name"], company: t["company"] }
-    end
-    get = { train: name_train_delay }
-    # puts get[:train]
-    # 長期運休等も拾っているので消す。たまにチェック必要。
-    # 取得元サイト https://www.tetsudo.com/traffic/
-    ignore_train = ["小湊鉄道線", "富士急行", "島原鉄道線", "特急ラピート", "特急サザン", "阿武隈急行線"]
-    get[:train].delete_if do |train|
-      ignore_train.include?(train[:name])
+    begin
+      raise
+      response_train = open(train_delay_url)
+      train_delay = JSON.parse(response_train.read)
+      name_train_delay = []
+      train_delay.map do |t|
+        name_train_delay << { name: t["name"], company: t["company"] }
+      end
+      get = { train: name_train_delay }
+      # puts get[:train]
+      # 長期運休等も拾っているので消す。たまにチェック必要。
+      # 取得元サイト https://www.tetsudo.com/traffic/
+      ignore_train = ["小湊鉄道線", "富士急行", "島原鉄道線", "特急ラピート", "特急サザン", "阿武隈急行線"]
+      get[:train].delete_if do |train|
+        ignore_train.include?(train[:name])
+      end
+    rescue
+      get = { train: nil }
     end
 
     # NHK番組表 api取得

@@ -18,24 +18,24 @@
 
       h1 言い訳
 
-      p 言い訳に使えそうな情報
+      p 近くの路線が遅延していれば積極的に言い訳に組み込みましょう。
 
-      p 現在遅延している路線は以下の通りです。
-
-      table.table
-        thead
-          tbody
-            tr
-              th scope="col"
-                th 路線名
-                th 運行会社
-            - @api_info[:train].each do |t|
+      - if @api_info[:train]
+        p 現在遅延している路線は以下の通りです。
+        table.table
+          thead
+            tbody
               tr
                 th scope="col"
-                  td = t[:name]
-                  td = t[:company]
-
-      p 近くの路線が遅延していれば積極的に言い訳に組み込みましょう。
+                  th 路線名
+                  th 運行会社
+              - @api_info[:train].each do |t|
+                tr
+                  th scope="col"
+                    td = t[:name]
+                    td = t[:company]
+      - else
+        p ・・・現在遅延している列車はなさそうです。言い訳では使わないようにしましょう。
 
       h1 話をそらす
 
@@ -46,8 +46,9 @@
           .card.mb-4.shadow-sm
             .card-header
               = link_to news[:title], news[:url]
-            .card-body
-              = image_tag news[:image], size: '100x100'
+            - if news[:image]
+              .card-body
+                = image_tag news[:image], size: '100x100'
               div
                 = news[:description]
 
