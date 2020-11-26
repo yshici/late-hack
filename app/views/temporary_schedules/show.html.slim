@@ -85,20 +85,23 @@
         </a>
       - else
         p ・・・周辺に飲食店は無いようです。ハムを買ってお詫びしましょう。
-        .card-deck.mb-3.text-center
-          - @api_info[:ham].each do |ham|
-            .card.mb-4.shadow-sm
-              .card-header
-                = link_to ham[:name], ham[:url]
-              .card-body
-                - if ham[:image_url]
-                  = image_tag ham[:image_url], size: '100x100'
-                - else
-                  = image_tag 'no_image.jpg', size: '100x100'
-                div
-                  = number_to_currency(ham[:price])
-                div
-                  p レビュー評価： #{ ham[:score] }点
+        - if @api_info[:ham]
+          .card-deck.mb-3.text-center
+            - @api_info[:ham].each do |ham|
+              .card.mb-4.shadow-sm
+                .card-header
+                  = link_to ham[:name], ham[:url]
+                .card-body
+                  - if ham[:image_url]
+                    = image_tag ham[:image_url], size: '100x100'
+                  - else
+                    = image_tag 'no_image.jpg', size: '100x100'
+                  div
+                    = number_to_currency(ham[:price])
+                  div
+                    p レビュー評価： #{ ham[:score] }点
+        - else
+          p ・・・・・・飲食店もハムも情報を取得できませんでした。
 
       h1 今後の対策
 
@@ -121,17 +124,20 @@
                   = hotel[:address2]
       - else
         p ・・・周辺にホテルは無いようです。テントを買って野宿しましょう。
-        .card-deck.mb-3.text-center
-          - @api_info[:tent].each do |tent|
-            .card.mb-4.shadow-sm
-              .card-header
-                = link_to tent[:name], tent[:url]
-              .card-body
-                - if tent[:image_url]
-                  = image_tag tent[:image_url], size: '100x100'
-                - else
-                  = image_tag 'no_image.jpg', size: '100x100'
-                div
-                  = number_to_currency(tent[:price])
-                div
-                  p レビュー評価： #{ tent[:score] }点
+        - if @api_info[:tent]
+          .card-deck.mb-3.text-center
+            - @api_info[:tent].each do |tent|
+              .card.mb-4.shadow-sm
+                .card-header
+                  = link_to tent[:name], tent[:url]
+                .card-body
+                  - if tent[:image_url]
+                    = image_tag tent[:image_url], size: '100x100'
+                  - else
+                    = image_tag 'no_image.jpg', size: '100x100'
+                  div
+                    = number_to_currency(tent[:price])
+                  div
+                    p レビュー評価： #{ tent[:score] }点
+        - else
+          p ・・・・・・ホテルもテントも情報を取得できませんでした。

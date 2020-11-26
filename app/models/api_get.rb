@@ -82,13 +82,17 @@ class ApiGet
       get[:restaurant] = nil
       # 楽天商品ランキングAPI（ハム）取得
       rakuten_ham_url = "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20170628?format=json&genreId=100228&applicationId=#{ rakuten_api_key }"
-      response_ham = open(rakuten_ham_url)
-      ham_rakuten = JSON.parse(response_ham.read)
-      get_ham = []
-      ham_rakuten["Items"].first(3).each do |ham|
-        get_ham << { name: ham["Item"]["itemName"], url: ham["Item"]["itemUrl"], image_url: ham["Item"]["smallImageUrls"][0]["imageUrl"], price: ham["Item"]["itemPrice"], score: ham["Item"]["reviewAverage"] }
+      begin
+        response_ham = open(rakuten_ham_url)
+        ham_rakuten = JSON.parse(response_ham.read)
+        get_ham = []
+        ham_rakuten["Items"].first(3).each do |ham|
+          get_ham << { name: ham["Item"]["itemName"], url: ham["Item"]["itemUrl"], image_url: ham["Item"]["smallImageUrls"][0]["imageUrl"], price: ham["Item"]["itemPrice"], score: ham["Item"]["reviewAverage"] }
+        end
+        get[:ham] = get_ham
+      rescue
+        get[:ham] = nil
       end
-      get[:ham] = get_ham
     end
 
     # 楽天トラベル api取得
@@ -107,13 +111,17 @@ class ApiGet
       get[:hotel] = nil
       # 楽天商品ランキングAPI（テント）取得
       rakuten_tent_url = "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20170628?format=json&genreId=302373&applicationId=#{ rakuten_api_key }"
-      response_tent = open(rakuten_tent_url)
-      tent_rakuten = JSON.parse(response_tent.read)
-      get_tent = []
-      tent_rakuten["Items"].first(3).each do |tent|
-        get_tent << { name: tent["Item"]["itemName"], url: tent["Item"]["itemUrl"], image_url: tent["Item"]["smallImageUrls"][0]["imageUrl"], price: tent["Item"]["itemPrice"], score: tent["Item"]["reviewAverage"] }
+      begin
+        response_tent = open(rakuten_tent_url)
+        tent_rakuten = JSON.parse(response_tent.read)
+        get_tent = []
+        tent_rakuten["Items"].first(3).each do |tent|
+          get_tent << { name: tent["Item"]["itemName"], url: tent["Item"]["itemUrl"], image_url: tent["Item"]["smallImageUrls"][0]["imageUrl"], price: tent["Item"]["itemPrice"], score: tent["Item"]["reviewAverage"] }
+        end
+        get[:tent] = get_tent
+      rescue
+        get[:tent] = nil
       end
-      get[:tent] = get_tent
     end
     get
   end
