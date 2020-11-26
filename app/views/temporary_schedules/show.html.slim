@@ -49,9 +49,11 @@
             .card.mb-4.shadow-sm
               .card-header
                 = link_to news[:title], news[:url]
-              - if news[:image]
-                .card-body
+              .card-body
+                - if news[:image]
                   = image_tag news[:image], size: '100x100'
+                - else
+                  = image_tag 'no_image.jpg', size: '100x100'
                 div
                   = news[:description]
       - else
@@ -69,7 +71,10 @@
               .card-header
                 = link_to rest[:name], rest[:url]
               .card-body
-                = image_tag rest[:image_url], size: '100x100'
+                - if rest[:image_url]
+                  = image_tag rest[:image_url], size: '100x100'
+                - else
+                  = image_tag 'no_image.jpg', size: '100x100'
                 div
                   = rest[:category]
                 div
@@ -86,7 +91,10 @@
               .card-header
                 = link_to ham[:name], ham[:url]
               .card-body
-                = image_tag ham[:image_url], size: '100x100'
+                - if ham[:image_url]
+                  = image_tag ham[:image_url], size: '100x100'
+                - else
+                  = image_tag 'no_image.jpg', size: '100x100'
                 div
                   = number_to_currency(ham[:price])
                 div
@@ -104,7 +112,10 @@
               .card-header
                 = link_to hotel[:name], hotel[:url]
               .card-body
-                = image_tag hotel[:image_url], size: '100x100'
+                - if hotel[:image_url]
+                  = image_tag hotel[:image_url], size: '100x100'
+                - else
+                  = image_tag 'no_image.jpg', size: '100x100'
                 div
                   = hotel[:address1]
                   = hotel[:address2]
@@ -116,7 +127,10 @@
               .card-header
                 = link_to tent[:name], tent[:url]
               .card-body
-                = image_tag tent[:image_url], size: '100x100'
+                - if tent[:image_url]
+                  = image_tag tent[:image_url], size: '100x100'
+                - else
+                  = image_tag 'no_image.jpg', size: '100x100'
                 div
                   = number_to_currency(tent[:price])
                 div
