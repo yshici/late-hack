@@ -1,4 +1,5 @@
 / = debug @api_info
+
 .container
   h1.pt-3.border-bottom.border-gray 精密な診断結果
   .row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
@@ -6,9 +7,14 @@
       h2 あなたはこの予定に3時間遅れることができます。
       - if @api_info[:weather]
         h5
-          | 目的地周辺の天気は"#{ @api_info[:weather][:name] }"です。
+          | 内訳
           br
-          | こんな天気では遅刻も仕方ありません。
+          | 待ち合わせ場所周辺の天気は#{ @api_info[:weather][:type] }です。#{ weather_name(@api_info[:weather][:id]) }
+          br
+          | 気温は#{ @api_info[:weather][:temp].round(1) }℃です。#{ weather_temp(@api_info[:weather][:temp]) }
+          br
+          | 気圧は#{ @api_info[:weather][:pressure] }hpaです。押されてます。+1時間遅刻可能
+
       -else
         h5 天気情報が取得できませんでした。
       / - if @api_info[:nhk]
@@ -100,7 +106,7 @@
                     | レビュー評価： #{ ham[:score] }点
         - else
           h5 ・・・・・・飲食店もハムも情報を取得できませんでした。
-      h1 今後の対策
+      h2 今後の対策
       h5
         | 遅刻しないためには周辺のホテルに前泊すべきです。
       - if @api_info[:hotel]
