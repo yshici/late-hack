@@ -62,7 +62,8 @@ class ApiGet
     begin
       response_weather = open(open_weather_url)
       result_weather = JSON.parse(response_weather.read)
-      get = { weather: { name: result_weather["current"]["weather"][0]["description"] } }
+      # p result_weather
+      get = { weather: { id: result_weather["current"]["weather"][0]["id"], type: result_weather["current"]["weather"][0]["description"], temp: result_weather["current"]["temp"], pressure: result_weather["current"]["pressure"], wind_speed: result_weather["current"]["wind_speed"] } }
     rescue
       get = { weather: nil }
     end

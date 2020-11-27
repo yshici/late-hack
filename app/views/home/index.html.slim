@@ -1,6 +1,7 @@
 .container
-  .row.my-3.mx-5.p-3
-    .pt-3.center-block.text-center
-      = link_to '今すぐ診断する', new_temporary_schedules_path, class: 'form-btn mb-5'
-      p ユーザー登録して使用する
-      = link_to 'ユーザー登録 ログイン', login_path, class: 'form-btn'
+  .row
+    .col-md-10.offset-md-2.col-lg-8
+      .py-5.mx-5.center-block.text-center
+        = link_to '今すぐ診断する', new_temporary_schedules_path, class: 'form-btn mb-5'
+        p ユーザー登録して使用する
+        = link_to 'ユーザー登録 ログイン', login_path, class: 'form-btn'

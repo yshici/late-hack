@@ -1,48 +1,53 @@
 / = debug @api_info
 
 .container
-  h1.border-bottom.border-gray 精密な診断結果
+  h1.pt-3.border-bottom.border-gray 精密な診断結果
   .row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
-    .pt-3.center-block
-      h1 あなたはこの予定に3時間遅れることができます。
+    .mx-4.center-block
+      h2 あなたはこの予定に3時間遅れることができます。
       - if @api_info[:weather]
-        p 目的地周辺の天気は"#{ @api_info[:weather][:name] }"です。
-        p こんな天気では遅刻も仕方ありません。
+        h5
+          | 内訳
+          br
+          | 待ち合わせ場所周辺の天気は#{ @api_info[:weather][:type] }です。#{ weather_name(@api_info[:weather][:id]) }
+          br
+          | 気温は#{ @api_info[:weather][:temp].round(1) }℃です。#{ weather_temp(@api_info[:weather][:temp]) }
+          br
+          | 気圧は#{ @api_info[:weather][:pressure] }hpaです。押されてます。+1時間遅刻可能
+
       -else
-        p 天気情報が取得できませんでした。
-      - if @api_info[:nhk]
-        p 現在NHK総合では""#{@api_info[:nhk][:name]}"をやっています。
-      - else
-        p 番組表が取得できませんでした。
-
-      p こんな面白い番組があったのでは遅刻も仕方ないでしょう。
-
-      h1 相手に怒られた場合の対応
-
-      h1 言い訳
-
-      p 近くの路線が遅延していれば積極的に言い訳に組み込みましょう。
-
+        h5 天気情報が取得できませんでした。
+      / - if @api_info[:nhk]
+      /   h5 現在NHK総合では""#{@api_info[:nhk][:name]}"をやっています。
+      / - else
+      /   h5 番組表が取得できませんでした。
+      / h5 こんな面白い番組があったのでは遅刻も仕方ないでしょう。
+  h1.pt-3.border-bottom.border-gray 相手に怒られないためのテクニック
+  .row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
+    .mx-4.center-block
+      h2 言い訳をする
+      h5 近くの路線が遅延していれば積極的に言い訳に組み込みましょう。
       - if @api_info[:train]
-        p 現在遅延している路線は以下の通りです。
-        table.table
-          thead
-            tbody
-              tr
-                th scope="col"
-                  th 路線名
-                  th 運行会社
-              - @api_info[:train].each do |t|
+        h5 現在遅延している路線は以下の通りです。
+        .mx-5
+          table.table
+            thead
+              tbody
                 tr
                   th scope="col"
-                    td = t[:name]
-                    td = t[:company]
+                    th 路線名
+                    th 運行会社
+                - @api_info[:train].each do |t|
+                  tr
+                    th scope="col"
+                      td = t[:name]
+                      td = t[:company]
       - else
         p ・・・現在遅延している列車はなさそうです。言い訳では使わないようにしましょう。
 
-      h1 話をそらす
+      h2 話をそらす
 
-      p 待ち合わせ場所に到着したら、まずは今話題のニュースについて語り始めて相手の気を紛らわせましょう
+      h5 待ち合わせ場所に到着したら、まずは今話題のニュースについて語り始めて相手の気を紛らわせましょう
       - if @api_info[:news]
         .card-deck.mb-3.text-center
           - @api_info[:news].each do |news|
@@ -57,17 +62,16 @@
                 div
                   = news[:description]
       - else
-        p ニュースが取得できませんでした。
-
-      h1 謝罪
-
-      p 遅刻のお詫びにはご飯を奢ると喜ばれます
-
-      p 周辺のお店をいますぐ予約しましょう
+        h5 ニュースが取得できませんでした。
+      h2 謝罪する
+      h5
+        | 遅刻のお詫びにはご飯を奢ると喜ばれます。
+        br
+        | 周辺のお店をいますぐ予約しましょう。
       - if @api_info[:restaurant]
-        .card-deck.mb-3.text-center
+        .card-deck.mb-3.text-center.h5
           - @api_info[:restaurant].each do |rest|
-            .card.mb-4.shadow-sm
+            .card.shadow-sm
               .card-header
                 = link_to rest[:name], rest[:url]
               .card-body
@@ -79,14 +83,14 @@
                   = rest[:category]
                 div
                   = rest[:address]
-
-        <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
-        <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="102" height="26" border="0" alt="グルメ情報検索サイト　ぐるなび">
-        </a>
+        .mb-4
+          <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
+          <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="153" height="39" border="0" alt="グルメ情報検索サイト　ぐるなび">
+          </a>
       - else
-        p ・・・周辺に飲食店は無いようです。ハムを買ってお詫びしましょう。
+        h5 ・・・周辺に飲食店は無いようです。ハムを買ってお詫びしましょう。
         - if @api_info[:ham]
-          .card-deck.mb-3.text-center
+          .card-deck.mb-3.text-center.h5
             - @api_info[:ham].each do |ham|
               .card.mb-4.shadow-sm
                 .card-header
@@ -99,17 +103,14 @@
                   div
                     = number_to_currency(ham[:price])
                   div
-                    p レビュー評価： #{ ham[:score] }点
+                    | レビュー評価： #{ ham[:score] }点
         - else
-          p ・・・・・・飲食店もハムも情報を取得できませんでした。
-
-      h1 今後の対策
-
-      p 遅刻癖のある人は数時間前から待ち合わせ場所近くにいるべきです。
-
-      p 周辺のホテルへ前日入りすると良いでしょう。
+          h5 ・・・・・・飲食店もハムも情報を取得できませんでした。
+      h2 今後の対策
+      h5
+        | 遅刻しないためには周辺のホテルに前泊すべきです。
       - if @api_info[:hotel]
-        .card-deck.mb-3.text-center
+        .card-deck.mb-3.text-center.h5
           - @api_info[:hotel].each do |hotel|
             .card.mb-4.shadow-sm
               .card-header
@@ -123,9 +124,9 @@
                   = hotel[:address1]
                   = hotel[:address2]
       - else
-        p ・・・周辺にホテルは無いようです。テントを買って野宿しましょう。
+        h5 ・・・周辺にホテルは無いようです。テントを購入しましょう。
         - if @api_info[:tent]
-          .card-deck.mb-3.text-center
+          .card-deck.mb-3.text-center.h5
             - @api_info[:tent].each do |tent|
               .card.mb-4.shadow-sm
                 .card-header
@@ -138,6 +139,6 @@
                   div
                     = number_to_currency(tent[:price])
                   div
-                    p レビュー評価： #{ tent[:score] }点
+                    | レビュー評価： #{ tent[:score] }点
         - else
-          p ・・・・・・ホテルもテントも情報を取得できませんでした。
+          h5 ・・・・・・ホテルもテントも情報を取得できませんでした。
