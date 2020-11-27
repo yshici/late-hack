@@ -11,11 +11,11 @@
           | こんな天気では遅刻も仕方ありません。
       -else
         h5 天気情報が取得できませんでした。
-      - if @api_info[:nhk]
-        h5 現在NHK総合では""#{@api_info[:nhk][:name]}"をやっています。
-      - else
-        h5 番組表が取得できませんでした。
-      h5 こんな面白い番組があったのでは遅刻も仕方ないでしょう。
+      / - if @api_info[:nhk]
+      /   h5 現在NHK総合では""#{@api_info[:nhk][:name]}"をやっています。
+      / - else
+      /   h5 番組表が取得できませんでした。
+      / h5 こんな面白い番組があったのでは遅刻も仕方ないでしょう。
   h1.pt-3.border-bottom.border-gray 相手に怒られないためのテクニック
   .row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
     .mx-4.center-block
