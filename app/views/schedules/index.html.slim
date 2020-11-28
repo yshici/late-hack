@@ -1,5 +1,5 @@
 .container
-  .text-center
+  .text-center.py-3
     = link_to '新しい予定を登録する', new_schedule_path, class: "h2 form-btn"
 
   = month_calendar events: @schedules do |date, schedules|
