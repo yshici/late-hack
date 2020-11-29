@@ -23,7 +23,7 @@
                   td = Schedule.human_attribute_name(:description)
                   td = @schedule.description
   .mt-5.text-center
-    - if @schedule.result == {}
+    - if @schedule.result.blank?
       = link_to '編集', edit_schedule_path(@schedule), class: "link-btn mr-5"
     - else
       = link_to '結果を見る', result_path(@schedule), class: "link-btn mr-5"
