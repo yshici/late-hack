@@ -1,7 +1,10 @@
+= image_tag 'late_hack_topimage.jpg', class: 'top_image'
 .container
   .row
     .col-md-10.offset-md-2.col-lg-8
       .py-5.mx-5.center-block.text-center
-        = link_to '今すぐ診断する', new_temporary_schedules_path, class: 'form-btn mb-5'
-        p ユーザー登録して使用する
-        = link_to 'ユーザー登録 ログイン', login_path, class: 'form-btn'
+        h5 今遅刻しそう or 遅刻している人へ
+        = link_to '今すぐ診断する', new_temporary_schedules_path, class: 'form-btn mb-5 h5'
+        h5 スケジュールを登録して使う
+        = link_to 'ユーザー登録／ログイン', login_path, class: 'form-btn h5'
+        h5 スケジュールを登録しておくと予定時間前に診断結果がメールで届きます
