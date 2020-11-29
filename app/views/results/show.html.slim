@@ -1,2 +1,11 @@
-/ = debug @schedule.result
-= render 'shared/result', result: @schedule.result
+.container
+  .row.my-3.mx-5.p-2.shadow-sm.rounded-lg.border
+    .mx-4.center-block
+      h4
+      | 予定名：#{ @schedule.name }
+      br
+      | 待ち合わせ時間：#{ l @schedule.meeting_time, format: :long }
+      br
+      | 待ち合わせ場所：#{ @schedule.destination_name }
+      |              #{ @schedule.destination_address }
+  = render 'shared/result', result: @schedule.result
