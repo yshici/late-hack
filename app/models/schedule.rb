@@ -26,7 +26,7 @@ class Schedule < ApplicationRecord
   serialize :result, Hash
 
   def datetime_not_before
-    errors.add(:meeting_time, "は現在時刻以降を指定してください") if meeting_time.nil? || meeting_time < DateTime.now.ago(1.hours)
+    errors.add(:meeting_time, "は現在時刻以降を指定してください") if meeting_time.nil? || meeting_time < DateTime.now.ago(10.minutes)
   end
 
   belongs_to :user
@@ -38,7 +38,7 @@ class Schedule < ApplicationRecord
   def get_result
     get_api_info = ApiGet.new().get_api
     Schedule.find_each do |schedule|
-      if schedule.meeting_time > 1.hours.ago && schedule.meeting_time < 1.hours.since
+      if schedule.meeting_time > 10.minutes.ago && schedule.meeting_time < 10.minutes.since
         get_api_info_with_position = ApiGet.new().get_api_with_position(schedule.destination_lat, schedule.destination_lng)
         schedule.result = get_api_info.merge(get_api_info_with_position)
         schedule.save!
