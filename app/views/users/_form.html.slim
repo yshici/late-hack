@@ -1,14 +1,15 @@
 = form_with model: user, local: true do |f|
-        .form-group.mb-5
-          = f.label :name, class: 'control-label pull-left'
-          = f.text_field :name, id: "user_last_name", class: "form-control", type: "text"
-        .form-group.mb-5
-          = f.label :email, class: 'control-label pull-left'
-          = f.text_field :email, id: "user_email", class: "form-control", type: "email"
-        .form-group.mb-5
-          = f.label :password, class: 'control-label pull-left'
-          = f.text_field :password, id: "user_password", class: "form-control", type: "password"
-        .form-group.mb-5
-          = f.label :password_confirmation, class: 'control-label pull-left'
-          = f.text_field :password_confirmation, id: "user_password_confirmation", class: "form-control", type: "password"
-        = f.submit nil, class: 'form-btn'
+  .form-group.mb-5
+    = f.label :name, class: 'control-label pull-left'
+    = f.text_field :name, id: "user_last_name", class: "form-control", type: "text"
+  .form-group.mb-5
+    = f.label :email, class: 'control-label pull-left'
+    = f.text_field :email, id: "user_email", class: "form-control", type: "email"
+  .form-group.mb-5
+    = f.label :password, class: 'control-label pull-left'
+    = f.text_field :password, id: "user_password", class: "form-control", type: "password"
+  .form-group.mb-5
+    = f.label :password_confirmation, class: 'control-label pull-left'
+    = f.text_field :password_confirmation, id: "user_password_confirmation", class: "form-control", type: "password"
+  .form-group.text-center
+    = f.submit nil, class: 'form-btn'

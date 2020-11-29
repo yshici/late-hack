@@ -1,13 +1,17 @@
 $font-size-base: 0.7rem;
 @import "~bootstrap/scss/bootstrap";
 @import "~tempusdominus-bootstrap-4/src/sass/tempusdominus-bootstrap-4-build";
-@import 'simple_calendar_custom';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
 
 body {
   background-color: beige;
 }
 header {
   background-color: palegoldenrod;
+}
+
+.top_image{
+  width: 100%
 }
 
 .form-btn {
@@ -30,7 +34,14 @@ header {
   box-shadow: 0px 0px 0px 5px wheat;
 }
 
-.card-header {
-  background-color: salmon;
-  color: white;
+.card-header-news {
+  background-color: whitesmoke;
+}
+
+.card-header-rest {
+  background-color: lightcyan;
+}
+
+.card-header-hotel {
+  background-color: beige;
 }

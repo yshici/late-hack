@@ -1,14 +1,15 @@
 .container
-  h1.border-bottom.border-gray 待ち合わせ場所を指定してください
+  h1.pt-3.border-bottom.border-gray 待ち合わせ場所を指定してください
   .row
     .bg-white.shadow-sm.rounded-lg.border.col-md-10.offset-md-2.col-lg-8
-      .py-5.mx-5.center-block.text-center
+      .py-5.mx-5.center-block
         = form_with model: @schedule, url: temporary_schedules_path, local: true do |f|
           = render 'shared/error_messages', object: f.object
-          .form-group.mb-5
+          .form-group
             = f.label :destination_address, class: 'control-label pull-left'
             = render 'shared/map'
-            = f.text_field :destination_name, id: "data-place-name", placeholder: "マップから選択して下さい", size: "100x100", readonly: true, class: "form-control mt-5"
+            = f.text_field :destination_name, id: "data-place-name", placeholder: "マップから選択して下さい", size: "100x100", readonly: true, class: "form-control"
             = f.text_field :destination_lat_lng, id: "data-place-location", type: "hidden"
             = f.text_field :destination_address, id: "data-place-address", type: "hidden"
-          = f.button '決定', type: 'button', onclick: 'submit();', class: "form-btn"
+          .form-group.text-center
+            = f.button '決定', type: 'button', onclick: 'submit();', class: "form-btn"
