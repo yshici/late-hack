@@ -42,7 +42,7 @@ class Schedule < ApplicationRecord
         get_api_info_with_position = ApiGet.new().get_api_with_position(schedule.destination_lat, schedule.destination_lng)
         schedule.result = get_api_info.merge(get_api_info_with_position)
         schedule.save!
-        DelayInfoMailer.delay_info(schedule).deliver_now
+        ScheduleMailer.output_result(schedule).deliver_now
       end
     end
   end
