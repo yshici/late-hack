@@ -23,5 +23,8 @@
                   td = Schedule.human_attribute_name(:description)
                   td = @schedule.description
   .mt-5.text-center
-    = link_to '編集', edit_schedule_path(@schedule), class: "link-btn mr-5"
+    - if @schedule.result.blank?
+      = link_to '編集', edit_schedule_path(@schedule), class: "link-btn mr-5"
+    - else
+      = link_to '結果を見る', result_path(@schedule), class: "link-btn mr-5"
     = link_to '削除', schedule_path(@schedule), method: :delete, data: { confirm: '削除しますか？' }, class: "link-btn ml-5"

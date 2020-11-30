@@ -1,0 +1,8 @@
+<%= @schedule.user.name %>様
+
+予定：<%= @schedule.name %>には間に合っていますか？
+待ち合わせ時間：<%= l @schedule.meeting_time, format: :long %>
+待ち合わせ場所：<%= @schedule.destination_name %>
+
+遅刻している場合は以下の情報を活用してください。
+www.late-hack.com/results/<%= @schedule.id %>
