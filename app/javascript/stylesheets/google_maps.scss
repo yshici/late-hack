@@ -90,3 +90,22 @@ body {
 #target {
   width: 345px;
 }
+
+.custom-map-control-button {
+  appearance: button;
+  background-color: dimgray;
+  border: 2px solid black;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  margin: 10px;
+  padding: 0 0.5em;
+  height: 30px;
+  font: 400 18px;
+  color: white;
+  overflow: hidden;
+}
+.custom-map-control-button:hover {
+  background: #ebebeb;
+  color: black;
+}
