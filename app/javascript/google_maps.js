@@ -7,6 +7,40 @@ function initMap() {
     streetViewControl: false,
     fullscreenControl: false,
   });
+  // 位置情報取得ボタンを作成
+  const locationButton = document.createElement("button");
+  locationButton.textContent = "現在地へ移動";
+  locationButton.classList.add("custom-map-control-button");
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationButton);
+  locationButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          map.setCenter(pos);
+        },
+        () => {
+          handleLocationError(true, infoWindow, map.getCenter());
+        }
+      );
+    } else {
+      // ブラウザが位置情報取得に対応していない場合
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+  });
+  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+      browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
+  }
   // 検索ボックスを作成
   const input = document.getElementById("pac-input");
   const searchBox = new google.maps.places.SearchBox(input);
