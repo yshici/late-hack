@@ -26,19 +26,31 @@ function initMapRoutes() {
         map: map,
         directions: response,
       });
-    //   debugger;
       let leg = response.routes[0].legs[0];
       setTimeout(function() {
-        map.setZoom(16); // ルート表示後にズーム率を変更
+        map.setZoom(16); // ルート表示後にズームを変更
       });
+      // ルートを4分割して1/4、2/4、3/4の点にマーカー
+      for (let i = 1; i < 4; i++) {
+        addMarker(response, i);
+      }
+      function addMarker(response, n) {
+        var hoge = gon.hoge; // gon使ってコントローラーから読み込み
+        var hogeRandomNum = Math.floor(Math.random()*3);
+        hogeRandomNum = Math.floor(Math.random()*hoge.length);
+        var splitNum = Math.round(response.routes[0].overview_path.length * n / 4);
+        var latlng = new google.maps.LatLng(response.routes[0].overview_path[splitNum].lat(), response.routes[0].overview_path[splitNum].lng());
+        var marker = new google.maps.Marker({
+          position: latlng,
+          map: map
+        });
+        var infowindow = new google.maps.InfoWindow({
+          content: hoge[hogeRandomNum],
+          position: marker.position,
+        });
+        infowindow.open(marker.position, marker);
+      }
     }
   });
-  function attachMessage(marker, msg) {
-    google.maps.event.addListener(marker, "click", function(event) {
-      new google.maps.InfoWindow({
-        content: msg
-      }).open(marker.getMap(), marker);
-    });
-  }
 }
 window.initMapRoutes = initMapRoutes;
