@@ -60,6 +60,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'cocoon'
 gem 'simple_form'
 
+# Js Valiable
+gem 'gon'
+
 group :development, :test do
   # Test
   gem 'factory_bot_rails'
