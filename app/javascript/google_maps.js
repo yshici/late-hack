@@ -9,38 +9,34 @@ function initMap() {
   });
   // 位置情報取得ボタンを作成
   const locationButton = document.createElement("button");
+  // const locationButton = document.getElementById("locationButton");
   locationButton.textContent = "現在地へ移動";
   locationButton.classList.add("custom-map-control-button");
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationButton);
-  locationButton.addEventListener("click", (event) => {
+  locationButton.addEventListener("click", () => {
+    console.log(window.event.keyCode);
+    console.log(window.event.which);
     event.preventDefault();
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          map.setCenter(pos);
-        },
-        () => {
-          handleLocationError(true, infoWindow, map.getCenter());
-        }
-      );
+    if (window.event.keyCode === 13) {
+      console.log('geolocationEnterKey確認');
+      return false
     } else {
-      // ブラウザが位置情報取得に対応していない場合
-      handleLocationError(false, infoWindow, map.getCenter());
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            map.setCenter(pos);
+          },
+        );
+      } else {
+        return false
+      }
     }
   });
-  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(
-      browserHasGeolocation
-        ? "Error: The Geolocation service failed."
-        : "Error: Your browser doesn't support geolocation."
-    );
-    infoWindow.open(map);
-  }
+
   // 検索ボックスを作成
   const input = document.getElementById("pac-input");
   const searchBox = new google.maps.places.SearchBox(input);
@@ -80,7 +76,8 @@ function initMap() {
         `<div id="ababab">` +
           `<p>${ marker.title }</p>` +
           `<p>${ marker.address }</p>` +
-          `<input type="button" value="目的地に設定" id="addplace">` +
+          `<input type="button" value="出発地点に設定" id="addStartPoint">` +
+          `<input type="button" value="待ち合わせ場所に設定" id="addDestination">` +
         `</div>`;
       markers.push(
         new google.maps.Marker({marker})
@@ -111,7 +108,8 @@ function initMap() {
             `<div id="ababab">` +
             `<p>${ placeOnMap.name }</p>` +
             `<p>${ placeOnMap.formatted_address }</p>` +
-            `<input type="button" value="目的地に設定" id="addplace">` +
+            `<input type="button" value="出発地点に設定" id="addStartPoint">` +
+            `<input type="button" value="待ち合わせ場所に設定" id="addDestination">` +
             `</div>`;
           var infowindow = new google.maps.InfoWindow({
             content: contentOnMap,
@@ -124,10 +122,15 @@ function initMap() {
           currentInfoWindow = infowindow;
           // HTMLのformに値を送信
           infowindow.addListener('domready', () => {
-            document.getElementById("addplace").addEventListener("click", () => {
-              document.getElementById("data-place-name").value = placeOnMap.name;
-              document.getElementById("data-place-location").value = placeOnMap.geometry.location;
-              document.getElementById("data-place-address").value = placeOnMap.formatted_address;
+            document.getElementById("addStartPoint").addEventListener("click", () => {
+              document.getElementById("data-start-point-name").value = placeOnMap.name;
+              document.getElementById("data-start-point-location").value = placeOnMap.geometry.location;
+              document.getElementById("data-start-point-address").value = placeOnMap.formatted_address;
+            });
+            document.getElementById("addDestination").addEventListener("click", () => {
+              document.getElementById("data-destination-name").value = placeOnMap.name;
+              document.getElementById("data-destination-location").value = placeOnMap.geometry.location;
+              document.getElementById("data-destination-address").value = placeOnMap.formatted_address;
             });
           });
         }
@@ -153,10 +156,15 @@ function initMap() {
       currentInfoWindow = infowindow;
       // HTMLのformに値を送信
       infowindow.addListener('domready', () => {
-        document.getElementById("addplace").addEventListener("click", () => {
-          document.getElementById("data-place-name").value = marker.title;
-          document.getElementById("data-place-location").value = marker.position;
-          document.getElementById("data-place-address").value = marker.address;
+        document.getElementById("addStartPoint").addEventListener("click", () => {
+          document.getElementById("data-start-point-name").value = marker.title;
+          document.getElementById("data-start-point-location").value = marker.position;
+          document.getElementById("data-start-point-address").value = marker.address;
+        });
+        document.getElementById("addDestination").addEventListener("click", () => {
+          document.getElementById("data-destination-name").value = marker.title;
+          document.getElementById("data-destination-location").value = marker.position;
+          document.getElementById("data-destination-address").value = marker.address;
         });
       });
     });
