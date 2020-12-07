@@ -7,12 +7,14 @@ function initMap() {
     streetViewControl: false,
     fullscreenControl: false,
   });
+  /////////////////// ここで現在地取得ボタンを設定 ///////////////////
   // 位置情報取得ボタンを作成
   const locationButton = document.createElement("button");
   // const locationButton = document.getElementById("locationButton");
   locationButton.textContent = "現在地へ移動";
   locationButton.classList.add("custom-map-control-button");
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationButton);
+  // 位置情報取得ボタンクリックで発火
   locationButton.addEventListener("click", () => {
     console.log(window.event.keyCode);
     console.log(window.event.which);
@@ -36,6 +38,7 @@ function initMap() {
       }
     }
   });
+  ////////////////////////////////////////////////////////////////
 
   // 検索ボックスを作成
   const input = document.getElementById("pac-input");
