@@ -8,6 +8,7 @@ require("timepicker.js")
 require("moment")
 require("tempusdominus-bootstrap-4")
 require("google_maps.js")
+require("google_maps_routes.js")
 
 import '@fortawesome/fontawesome-free/js/all'
 import '../stylesheets/application'

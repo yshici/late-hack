@@ -12,12 +12,13 @@ function initMapRoutes() {
     draggable: true,
     preserveViewport: true
   };
+  var latlng = gon.latlng;
   let directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
   let directionsService = new google.maps.DirectionsService();
   directionsDisplay.setMap(map);
   let request = {
-  origin: new google.maps.LatLng(35.6120, 139.3824), // 出発地点
-  destination: new google.maps.LatLng(35.6581, 139.7017), // 待ち合わせ場所
+  origin: new google.maps.LatLng(latlng[1][0], latlng[1][1]), // 出発地点
+  destination: new google.maps.LatLng(latlng[0][0], latlng[0][1]), // 待ち合わせ場所
   travelMode: google.maps.DirectionsTravelMode.WALKING, // 移動手段
   };
   directionsService.route(request, function(response,status) {
@@ -35,17 +36,16 @@ function initMapRoutes() {
         addMarker(response, i);
       }
       function addMarker(response, n) {
-        var hoge = gon.hoge; // gon使ってコントローラーから読み込み
-        var hogeRandomNum = Math.floor(Math.random()*3);
-        hogeRandomNum = Math.floor(Math.random()*hoge.length);
+        var excuse = gon.excuse; // gon使ってコントローラーから読み込み
+        var excuseRandomNum = Math.floor(Math.random()*excuse.length);
         var splitNum = Math.round(response.routes[0].overview_path.length * n / 4);
-        var latlng = new google.maps.LatLng(response.routes[0].overview_path[splitNum].lat(), response.routes[0].overview_path[splitNum].lng());
+        var latlngPoint = new google.maps.LatLng(response.routes[0].overview_path[splitNum].lat(), response.routes[0].overview_path[splitNum].lng());
         var marker = new google.maps.Marker({
-          position: latlng,
+          position: latlngPoint,
           map: map
         });
         var infowindow = new google.maps.InfoWindow({
-          content: hoge[hogeRandomNum],
+          content: excuse[excuseRandomNum],
           position: marker.position,
         });
         infowindow.open(marker.position, marker);
