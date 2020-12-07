@@ -6,7 +6,6 @@ class TemporarySchedulesController < ApplicationController
 
   def create
     @schedule = TemporarySchedule.new(schedule_params)
-    # binding.pry
     if @schedule.valid?
       session[:schedule] = @schedule
       redirect_to temporary_schedules_path
@@ -18,13 +17,17 @@ class TemporarySchedulesController < ApplicationController
 
   def show
     @schedule = session[:schedule]
-    lat, lng = TemporarySchedule.new().adjust_latlng(@schedule["destination_lat_lng"])
-    @api_info = ApiGet.new().get_api.merge(ApiGet.new().get_api_with_position(lat, lng))
+    @latlng = []
+    @latlng << TemporarySchedule.new().adjust_latlng(@schedule["destination_lat_lng"])
+    @latlng << TemporarySchedule.new().adjust_latlng(@schedule["start_point_lat_lng"])
+    gon.latlng = @latlng
+    @api_info = ApiGet.new().get_api.merge(ApiGet.new().get_api_with_position(@latlng[0][0], @latlng[0][1]))
+    gon.excuse = ExcuseForLate.new().excuse
   end
 
-private
+  private
 
   def schedule_params
-    params.require(:temporary_schedule).permit(:destination_name, :destination_lat_lng, :destination_address)
+    params.require(:temporary_schedule).permit(:destination_name, :destination_lat_lng, :destination_address, :start_point_name, :start_point_lat_lng, :start_point_address)
   end
 end
