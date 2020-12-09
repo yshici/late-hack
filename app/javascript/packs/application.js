@@ -14,3 +14,12 @@ import '@fortawesome/fontawesome-free/js/all'
 import '../stylesheets/application'
 import '../stylesheets/google_maps'
 import '../stylesheets/simple_calendar_custom';
+
+// エンターキーによるsubmitを無効化
+$(document).ready(function () {
+  $('.ignore-enterkey').keypress(function (e) {
+    if (!e) var e = window.event;
+    if (e.keyCode == 13)
+      return false;
+  });
+});

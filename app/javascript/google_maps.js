@@ -7,35 +7,32 @@ function initMap() {
     streetViewControl: false,
     fullscreenControl: false,
   });
+  /////////////////// ここで現在地取得ボタンを設定 ///////////////////
   // 位置情報取得ボタンを作成
   const locationButton = document.createElement("button");
-  // const locationButton = document.getElementById("locationButton");
   locationButton.textContent = "現在地へ移動";
   locationButton.classList.add("custom-map-control-button");
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationButton);
+  // 位置情報取得ボタンクリックで発火
   locationButton.addEventListener("click", () => {
     console.log(window.event.keyCode);
     console.log(window.event.which);
     event.preventDefault();
-    if (window.event.keyCode === 13) {
-      console.log('geolocationEnterKey確認');
-      return false
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          map.setCenter(pos);
+        },
+      );
     } else {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-            map.setCenter(pos);
-          },
-        );
-      } else {
-        return false
-      }
+      return false
     }
   });
+  ////////////////////////////////////////////////////////////////
 
   // 検索ボックスを作成
   const input = document.getElementById("pac-input");
@@ -49,7 +46,6 @@ function initMap() {
   // 検索で発火
   searchBox.addListener("places_changed", () => {
     const places = searchBox.getPlaces();
-
     if (places.length == 0) {
       return;
     }
