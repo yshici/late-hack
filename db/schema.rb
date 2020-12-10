@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_29_115356) do
+ActiveRecord::Schema.define(version: 2020_12_10_142237) do
 
   create_table "schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -24,6 +24,10 @@ ActiveRecord::Schema.define(version: 2020_11_29_115356) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "result"
+    t.string "start_point_name"
+    t.string "start_point_address"
+    t.float "start_point_lat"
+    t.float "start_point_lng"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
