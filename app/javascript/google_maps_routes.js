@@ -31,32 +31,42 @@ function initMapRoutes() {
       setTimeout(function() {
         map.setZoom(16); // ルート表示後にズームを変更
       });
-      // ルートを4分割して1/4、2/4、3/4の点にマーカー
-      for (let i = 1; i < 4; i++) {
-        addMarker(response, i);
-      }
-      function addMarker(response, n) {
-        var excuse = gon.excuse; // gon使ってコントローラーから読み込み
-        var excuseRandomNum = Math.floor(Math.random()*excuse.length);
-        var splitNum = Math.round(response.routes[0].overview_path.length * n / 4);
-        var latlngPoint = new google.maps.LatLng(response.routes[0].overview_path[splitNum].lat(), response.routes[0].overview_path[splitNum].lng());
-        var marker = new google.maps.Marker({
-          position: latlngPoint,
-          map: map
-        });
-        var infowindow = new google.maps.InfoWindow({
-          content: excuse[excuseRandomNum],
-          position: marker.position,
-        });
-        infowindow.open(marker.position, marker);
-        attachInfoWindow(marker, infowindow);
-      }
-      function attachInfoWindow(marker, infowindow) {
-        marker.addListener("click", () => {
-          infowindow.close(marker.position, marker);
+      if (response.routes[0].overview_path.length < 4) {
+        // 出発地・待ち合わせ場所が近い場合エラー
+        var errorMsg = document.getElementById("map-error");
+        errorMsg.textContent = "近すぎて何も起こりませんでした...";
+      } else {
+        // ルートを4分割して1/4、2/4、3/4の点にマーカー
+        for (let i = 1; i < 4; i++) {
+          addMarker(response, i);
+        }
+        function addMarker(response, n) {
+          var excuse = gon.excuse; // gon使ってコントローラーから読み込み
+          var excuseRandomNum = Math.floor(Math.random()*excuse.length);
+          var splitNum = Math.round(response.routes[0].overview_path.length * n / 4);
+          var latlngPoint = new google.maps.LatLng(response.routes[0].overview_path[splitNum].lat(), response.routes[0].overview_path[splitNum].lng());
+          var marker = new google.maps.Marker({
+            position: latlngPoint,
+            map: map
+          });
+          var infowindow = new google.maps.InfoWindow({
+            content: excuse[excuseRandomNum],
+            position: marker.position,
+          });
           infowindow.open(marker.position, marker);
-        })
+          attachInfoWindow(marker, infowindow);
+        }
+        function attachInfoWindow(marker, infowindow) {
+          marker.addListener("click", () => {
+            infowindow.close(marker.position, marker);
+            infowindow.open(marker.position, marker);
+          })
+        }
       }
+    } else {
+      // 経路取得できない場合エラー
+      var errorMsg = document.getElementById("map-error");
+      errorMsg.textContent = "経路が取得できませんでした...";
     }
   });
 }
