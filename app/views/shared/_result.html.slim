@@ -1,26 +1,35 @@
 / = debug result
 
-h1.pt-3.border-bottom.border-gray 精密な診断結果
+h1.pt-3.border-bottom.border-gray 診断結果
 .row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
   .mx-4.center-block
-    h2 あなたはこの予定に3時間遅れることができます。
-    - if result[:weather]
-      h5
-        | 内訳：
-        br
-        | 待ち合わせ場所周辺の天気は#{ result[:weather][:type] }です。#{ weather_name(result[:weather][:id]) }
-        br
-        | 気温は#{ result[:weather][:temp].round(1) }℃です。#{ weather_temp(result[:weather][:temp]) }
-        br
-        | 気圧は#{ result[:weather][:pressure] }hPaです。押されてます。+1時間遅刻可能
+    h5
+      | 道中でいろんなことが起こりました。
+      br
+      | ３時間遅刻できます。
+    h5.text-danger#map-error
+  = render 'shared/map_routes'
+  //////// 天気情報と番組表は一旦使わない //////
+    / h2 あなたはこの予定に3時間遅れることができます。
+    / - if result[:weather]
+    /   h5
+    /     | 内訳：
+    /     br
+    /     | 待ち合わせ場所周辺の天気は#{ result[:weather][:type] }です。#{ weather_name(result[:weather][:id]) }
+    /     br
+    /     | 気温は#{ result[:weather][:temp].round(1) }℃です。#{ weather_temp(result[:weather][:temp]) }
+    /     br
+    /     | 気圧は#{ result[:weather][:pressure] }hPaです。押されてます。+1時間遅刻可能
 
-    -else
-      h5 天気情報が取得できませんでした。
+    / -else
+    /   h5 天気情報が取得できませんでした。
+
     / - if result[:nhk]
     /   h5 現在NHK総合では""#{result[:nhk][:name]}"をやっています。
     / - else
     /   h5 番組表が取得できませんでした。
     / h5 こんな面白い番組があったのでは遅刻も仕方ないでしょう。
+    //////////////////////////////////////////
 h1.pt-3.border-bottom.border-gray 相手に怒られないためのテクニック
 .row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
   .mx-4.center-block

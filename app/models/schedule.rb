@@ -11,6 +11,10 @@
 #   t.datetime "created_at", precision: 6, null: false
 #   t.datetime "updated_at", precision: 6, null: false
 #   t.text "result"
+#   t.string "start_point_name"
+#   t.string "start_point_address"
+#   t.float "start_point_lat"
+#   t.float "start_point_lng"
 # end
 
 class Schedule < ApplicationRecord
@@ -21,6 +25,10 @@ class Schedule < ApplicationRecord
   validates :destination_lat, presence: true
   validates :destination_lng, presence: true
   validates :description, length: { maximum: 1000 }
+  validates :start_point_name, presence: true, length: { maximum: 255 }
+  validates :start_point_address, presence: true, length: { maximum: 255 }
+  validates :start_point_lat, presence: true
+  validates :start_point_lng, presence: true
   validate  :datetime_not_before
 
   serialize :result, Hash

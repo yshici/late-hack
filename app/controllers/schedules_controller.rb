@@ -44,18 +44,22 @@ class SchedulesController < ApplicationController
   private
 
   def schedule_params
-    params.require(:schedule).permit(:name, :meeting_time, :destination_name, :destination_address, :destination_lat_lng, :description, :user_id)
+    params.require(:schedule).permit(:name, :meeting_time, :destination_name, :destination_address, :destination_lat_lng, :start_point_name, :start_point_address, :start_point_lat_lng, :description, :user_id)
   end
 
   def adjust_schedule_params
-    # 緯度経度処理
-    lat, lng = schedule_params[:destination_lat_lng].delete("()").split(/,/)
     adjust = schedule_params
+    # 目的地緯度経度調整
+    destination_lat, destination_lng = schedule_params[:destination_lat_lng].delete("()").split(/,/)
     adjust.delete(:destination_lat_lng)
-    # binding.pry
-    adjust[:destination_lat] = lat.to_f
-    adjust[:destination_lng] = lng.to_f
-    # 待ち合わせ時間処理
+    adjust[:destination_lat] = destination_lat.to_f
+    adjust[:destination_lng] = destination_lng.to_f
+    # 出発地緯度経度調整
+    start_point_lat, start_point_lng = schedule_params[:start_point_lat_lng].delete("()").split(/,/)
+    adjust.delete(:start_point_lat_lng)
+    adjust[:start_point_lat] = start_point_lat.to_f
+    adjust[:start_point_lng] = start_point_lng.to_f
+    # 待ち合わせ時間調整
     adjust[:meeting_time] = Time.parse(adjust[:meeting_time])
     return adjust
   end

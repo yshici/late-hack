@@ -1,13 +1,12 @@
 class ApiGet
   require "json"
   require "open-uri"
-  # require 'news-api'
 
   def get_api
     # 鉄道遅延情報 api取得
     train_delay_url = "https://tetsudo.rti-giken.jp/free/delay.json"
     begin
-      response_train = open(train_delay_url)
+      response_train = URI.open(train_delay_url)
       train_delay = JSON.parse(response_train.read)
       name_train_delay = []
       train_delay.map do |t|
@@ -29,7 +28,7 @@ class ApiGet
     nhk_program_api_key = Rails.application.credentials.api_key[:nhk_program]
     nhk_program_url = "https://api.nhk.or.jp/v2/pg/now/130/g1.json?key=#{ nhk_program_api_key }"
     begin
-      response_nhk = open(nhk_program_url)
+      response_nhk = URI.open(nhk_program_url)
       nhk_program = JSON.parse(response_nhk.read)
       get[:nhk] = { name: nhk_program["nowonair_list"]["g1"]["previous"]["title"] }
     rescue
@@ -40,7 +39,7 @@ class ApiGet
     news_api_key = Rails.application.credentials.api_key[:news]
     news_url = "https://newsapi.org/v2/top-headlines?country=jp&apiKey=#{ news_api_key }"
     begin
-      response_news = open(news_url)
+      response_news = URI.open(news_url)
       news = JSON.parse(response_news.read)
       get_news = []
       news["articles"].first(5).each do |article|
@@ -60,7 +59,7 @@ class ApiGet
     # open weather api取得
     open_weather_url = "https://api.openweathermap.org/data/2.5/onecall?lat=#{ lat }&lon=#{ lng }&exclude=hourly,daily&units=metric&lang=ja&appid=#{ open_weather_api_key }"
     begin
-      response_weather = open(open_weather_url)
+      response_weather = URI.open(open_weather_url)
       result_weather = JSON.parse(response_weather.read)
       # p result_weather
       get = { weather: { id: result_weather["current"]["weather"][0]["id"], type: result_weather["current"]["weather"][0]["description"], temp: result_weather["current"]["temp"], pressure: result_weather["current"]["pressure"], wind_speed: result_weather["current"]["wind_speed"] } }
@@ -71,7 +70,7 @@ class ApiGet
     # ぐるなび api取得
     restaurant_url = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=#{ restaurant_api_key }&latitude=#{ lat }&longitude=#{ lng }"
     begin
-      response_restaurant = open(restaurant_url)
+      response_restaurant = URI.open(restaurant_url)
       restaurant_gurunavi = JSON.parse(response_restaurant.read)
       count = restaurant_gurunavi["rest"].length > 3 ? 3 : restaurant_gurunavi["rest"].length
       get_restaurant = []
@@ -84,7 +83,7 @@ class ApiGet
       # 楽天商品ランキングAPI（ハム）取得
       rakuten_ham_url = "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20170628?format=json&genreId=100228&applicationId=#{ rakuten_api_key }"
       begin
-        response_ham = open(rakuten_ham_url)
+        response_ham = URI.open(rakuten_ham_url)
         ham_rakuten = JSON.parse(response_ham.read)
         get_ham = []
         ham_rakuten["Items"].first(3).each do |ham|
@@ -100,7 +99,7 @@ class ApiGet
     rakuten_api_key = Rails.application.credentials.api_key[:rakuten]
     rakuten_hotel_url = "https://app.rakuten.co.jp/services/api/Travel/SimpleHotelSearch/20170426?format=json&datumType=1&latitude=#{ lat }&longitude=#{ lng }&applicationId=#{ rakuten_api_key }"
     begin
-      response_hotel = open(rakuten_hotel_url)
+      response_hotel = URI.open(rakuten_hotel_url)
       hotel_rakuten = JSON.parse(response_hotel.read)
       count = hotel_rakuten["hotels"].length > 3 ? 3 : hotel_rakuten["hotels"].length
       get_hotel = []
@@ -113,7 +112,7 @@ class ApiGet
       # 楽天商品ランキングAPI（テント）取得
       rakuten_tent_url = "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20170628?format=json&genreId=302373&applicationId=#{ rakuten_api_key }"
       begin
-        response_tent = open(rakuten_tent_url)
+        response_tent = URI.open(rakuten_tent_url)
         tent_rakuten = JSON.parse(response_tent.read)
         get_tent = []
         tent_rakuten["Items"].first(3).each do |tent|

@@ -1,5 +1,5 @@
 .map_wrapper
   div#map_routes
 
-- google_api_place = "https://maps.googleapis.com/maps/api/js?key=#{ Rails.application.credentials.api_key[:google_maps] }&libraries=places&callback=initMapRoutes".html_safe
+- google_api_place = "https://maps.googleapis.com/maps/api/js?key=#{ Rails.application.credentials.api_key[:google_maps] }&libraries=places&callback=initMapRoutes&v=beta&map_ids=8e0a97af9386fef".html_safe
 script{ async src = google_api_place }
