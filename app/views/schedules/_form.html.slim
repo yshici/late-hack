@@ -2,20 +2,24 @@
   = render 'shared/error_messages', object: f.object
   .form-group
     = f.label :name, class: 'control-label pull-left'
-    = f.text_field :name, class:'form-control', placeholder: "名前", size: "100x100"
+    = f.text_field :name, class:'form-control ignore-enterkey', placeholder: "名前", size: "100x100"
   .form-group
     = f.label :meeting_time, class: 'control-label pull-left'
-    = f.text_field :meeting_time, class:'form-control', placeholder: "待ち合わせ時間", size: "100x100", id: 'datetimepicker13'
+    = f.text_field :meeting_time, class:'form-control ignore-enterkey', placeholder: "待ち合わせ時間", size: "100x100", id: 'datetimepicker13'
     div#datetimepicker13
   .form-group
-    = f.label :destination_address, class: 'control-label pull-left'
     = render 'shared/map'
-    = f.text_field :destination_name, id: "data-place-name", placeholder: "マップから選択して下さい", size: "100x100", readonly: true, class: "form-control"
-    = f.text_field :destination_address, id: "data-place-address", type: "hidden"
-    = f.text_field :destination_lat_lng, id: "data-place-location", type: "hidden"
+    h5.mt-1 出発地点
+    = f.text_field :start_point_name, id: "data-start-point-name", placeholder: "マップから選択して下さい", size: "100x100", readonly: true, class: "form-control ignore-enterkey"
+    = f.text_field :start_point_lat_lng, id: "data-start-point-location", type: "hidden"
+    = f.text_field :start_point_address, id: "data-start-point-address", type: "hidden"
+    h5.mt-1 待ち合わせ場所
+    = f.text_field :destination_name, id: "data-destination-name", placeholder: "マップから選択して下さい", size: "100x100", readonly: true, class: "form-control ignore-enterkey"
+    = f.text_field :destination_lat_lng, id: "data-destination-location", type: "hidden"
+    = f.text_field :destination_address, id: "data-destination-address", type: "hidden"
   .form-group
     = f.label :description, class: 'control-label pull-left'
-    = f.text_area :description, class:'form-control'
+    = f.text_area :description, class:'form-control ignore-enterkey'
   .form-group.text-center
     = f.button '登録する', type: 'button', onclick: 'submit();', class: "form-btn"
 
