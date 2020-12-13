@@ -49,6 +49,13 @@ function initMapRoutes() {
           position: marker.position,
         });
         infowindow.open(marker.position, marker);
+        attachInfoWindow(marker, infowindow);
+      }
+      function attachInfoWindow(marker, infowindow) {
+        marker.addListener("click", () => {
+          infowindow.close(marker.position, marker);
+          infowindow.open(marker.position, marker);
+        })
       }
     }
   });
