@@ -1,10 +1,10 @@
-$font-size-base: 0.7rem;
 @import "~bootstrap/scss/bootstrap";
 @import "~tempusdominus-bootstrap-4/src/sass/tempusdominus-bootstrap-4-build";
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 
 body {
   background-color: beige;
+  font-size: 0.7vw;
 }
 header {
   background-color: palegoldenrod;
