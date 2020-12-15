@@ -4,14 +4,34 @@
 
 body {
   background-color: beige;
-  font-size: 0.7vw;
+  font-size: 0.9vw;
 }
 header {
   background-color: palegoldenrod;
+  .navbar-brand {
+    font-size: 1.4em;
+  }
+}
+
+.form-control {
+  font-size: 0.8em;
 }
 
 .top_image{
   width: 100%
+}
+
+.top_image_lg {
+  width: 100%;
+}
+.top_image_md {
+  width: 90%;
+  display: none;
+}
+
+@media screen and (max-width: 991px) {
+  .top_image_lg { display: none; }
+  .top_image_md { display: block; }
 }
 
 .form-btn {
@@ -21,7 +41,6 @@ header {
   text-decoration: none;
   color: #FFF;
   background-color: burlywood;
-//   background-image: linear-gradient(45deg, #FFC107 0%, #ff8b5f 100%);
 }
 
 .link-btn {
