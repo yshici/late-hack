@@ -9,11 +9,11 @@
     div#datetimepicker13
   .form-group
     = render 'shared/map'
-    h5.mt-1 出発地点
+    = f.label :start_point_name, class: 'control-label pull-left mt-2'
     = f.text_field :start_point_name, id: "data-start-point-name", placeholder: "マップから選択して下さい", size: "100x100", readonly: true, class: "form-control ignore-enterkey"
     = f.text_field :start_point_lat_lng, id: "data-start-point-location", type: "hidden"
     = f.text_field :start_point_address, id: "data-start-point-address", type: "hidden"
-    h5.mt-1 待ち合わせ場所
+    = f.label :destination_name, class: 'control-label pull-left mt-2'
     = f.text_field :destination_name, id: "data-destination-name", placeholder: "マップから選択して下さい", size: "100x100", readonly: true, class: "form-control ignore-enterkey"
     = f.text_field :destination_lat_lng, id: "data-destination-location", type: "hidden"
     = f.text_field :destination_address, id: "data-destination-address", type: "hidden"

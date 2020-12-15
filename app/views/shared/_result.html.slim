@@ -1,153 +1,155 @@
 / = debug result
 
-h1.pt-3.border-bottom.border-gray 診断結果
-.row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
-  .mx-4.center-block
-    h5
-      | 道中でいろんなことが起こりました。
-      br
-      | ３時間遅刻できます。
-    h5.text-danger#map-error
-  = render 'shared/map_routes'
-  //////// 天気情報と番組表は一旦使わない //////
-    / h2 あなたはこの予定に3時間遅れることができます。
-    / - if result[:weather]
-    /   h5
-    /     | 内訳：
-    /     br
-    /     | 待ち合わせ場所周辺の天気は#{ result[:weather][:type] }です。#{ weather_name(result[:weather][:id]) }
-    /     br
-    /     | 気温は#{ result[:weather][:temp].round(1) }℃です。#{ weather_temp(result[:weather][:temp]) }
-    /     br
-    /     | 気圧は#{ result[:weather][:pressure] }hPaです。押されてます。+1時間遅刻可能
+h3.pt-3.border-bottom.border-gray 診断結果
+.row
+  .bg-white.shadow.rounded.border.col-lg-10.col-md-12.offset-lg-1.p-3
+    .mx-4.center-block
+      h6
+        | 道中でいろんなことが起こりました。
+        br
+        | ３時間遅刻できます。
+      h6.text-danger#map-error
+    = render 'shared/map_routes'
+    //////// 天気情報と番組表は一旦使わない //////
+      / h2 あなたはこの予定に3時間遅れることができます。
+      / - if result[:weather]
+      /   h5
+      /     | 内訳：
+      /     br
+      /     | 待ち合わせ場所周辺の天気は#{ result[:weather][:type] }です。#{ weather_name(result[:weather][:id]) }
+      /     br
+      /     | 気温は#{ result[:weather][:temp].round(1) }℃です。#{ weather_temp(result[:weather][:temp]) }
+      /     br
+      /     | 気圧は#{ result[:weather][:pressure] }hPaです。押されてます。+1時間遅刻可能
 
-    / -else
-    /   h5 天気情報が取得できませんでした。
+      / -else
+      /   h5 天気情報が取得できませんでした。
 
-    / - if result[:nhk]
-    /   h5 現在NHK総合では""#{result[:nhk][:name]}"をやっています。
-    / - else
-    /   h5 番組表が取得できませんでした。
-    / h5 こんな面白い番組があったのでは遅刻も仕方ないでしょう。
-    //////////////////////////////////////////
-h1.pt-3.border-bottom.border-gray 相手に怒られないためのテクニック
-.row.my-3.mx-5.p-3.bg-white.shadow-sm.rounded-lg.border
-  .mx-4.center-block
-    h2 言い訳をする
-    h5 近くの路線が遅延していれば言い訳に組み込みましょう。
-    - if result[:train]
-      h5 現在遅延している路線は以下の通りです。
-      .mx-5
-        table.table
-          thead
-            tbody
-              tr
-                th scope="col"
-                  th 路線名
-                  th 運行会社
-              - result[:train].each do |t|
+      / - if result[:nhk]
+      /   h5 現在NHK総合では""#{result[:nhk][:name]}"をやっています。
+      / - else
+      /   h5 番組表が取得できませんでした。
+      / h5 こんな面白い番組があったのでは遅刻も仕方ないでしょう。
+      //////////////////////////////////////////
+h3.pt-3.border-bottom.border-gray 相手に怒られないためのテクニック
+.row
+  .bg-white.shadow.rounded.border.col-lg-10.col-md-12.offset-lg-1.p-3
+    .mx-4.center-block
+      h4 言い訳をする
+      h6 近くの路線が遅延していれば言い訳に組み込みましょう。
+      - if result[:train]
+        h6 現在遅延している路線は以下の通りです。
+        .mx-5
+          table.table
+            thead
+              tbody
                 tr
                   th scope="col"
-                    td = t[:name]
-                    td = t[:company]
-    - else
-      p ・・・現在遅延している列車はなさそうです。言い訳では使わないようにしましょう。
+                    th 路線名
+                    th 運行会社
+                - result[:train].each do |t|
+                  tr
+                    th scope="col"
+                      td = t[:name]
+                      td = t[:company]
+      - else
+        p ・・・現在遅延している列車はなさそうです。言い訳では使わないようにしましょう。
 
-    h2 話をそらす
+      h4 話をそらす
 
-    h5 待ち合わせ場所に到着したら、まずは今話題のニュースについて語り始めて相手の気を紛らわせましょう
-    - if result[:news]
-      .card-deck.mb-3.text-center
-        - result[:news].each do |news|
-          .card.mb-4.shadow-sm
-            .card-header.card-header-news
-              = link_to news[:title], news[:url]
-            .card-body
-              - if news[:image]
-                = image_tag news[:image], size: '100x100'
-              - else
-                = image_tag 'no_image.jpg', size: '100x100'
-              div
-                = news[:description]
-    - else
-      h5 ニュースが取得できませんでした。
-    h2 謝罪する
-    h5
-      | 遅刻のお詫びにはご飯を奢ると喜ばれます。
-      br
-      | 周辺のお店をいますぐ予約しましょう。
-    - if result[:restaurant]
-      .card-deck.mb-3.text-center.h5
-        - result[:restaurant].each do |rest|
-          .card.shadow-sm
-            .card-header.card-header-rest
-              = link_to rest[:name], rest[:url]
-            .card-body
-              - if rest[:image_url]
-                = image_tag rest[:image_url], size: '100x100'
-              - else
-                = image_tag 'no_image.jpg', size: '100x100'
-              div
-                = rest[:category]
-              div
-                = rest[:address]
-      .mb-4
-        <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
-        <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="153" height="39" border="0" alt="グルメ情報検索サイト　ぐるなび">
-        </a>
-    - else
-      h5 ・・・周辺に飲食店は無いようです。ハムを買ってお詫びしましょう。
-      - if result[:ham]
-        .card-deck.mb-3.text-center.h5
-          - result[:ham].each do |ham|
+      h6 待ち合わせ場所に到着したら、まずは今話題のニュースについて語り始めて相手の気を紛らわせましょう
+      - if result[:news]
+        .card-deck.mb-3.text-center
+          - result[:news].each do |news|
             .card.mb-4.shadow-sm
-              .card-header.card-header-rest
-                = link_to ham[:name], ham[:url]
+              .card-header.card-header-news
+                = link_to news[:title], news[:url]
               .card-body
-                - if ham[:image_url]
-                  = image_tag ham[:image_url], size: '100x100'
+                - if news[:image]
+                  = image_tag news[:image], size: '100x100'
                 - else
                   = image_tag 'no_image.jpg', size: '100x100'
                 div
-                  = number_to_currency(ham[:price])
-                div
-                  | レビュー評価： #{ ham[:score] }点
+                  = news[:description]
       - else
-        h5 ・・・・・・飲食店もハムも情報を取得できませんでした。
-    h2 今後の対策
-    h5
-      | 遅刻しないためには周辺のホテルに前泊すべきです。
-    - if result[:hotel]
-      .card-deck.mb-3.text-center.h5
-        - result[:hotel].each do |hotel|
-          .card.mb-4.shadow-sm
-            .card-header.card-header-hotel
-              = link_to hotel[:name], hotel[:url]
-            .card-body
-              - if hotel[:image_url]
-                = image_tag hotel[:image_url], size: '100x100'
-              - else
-                = image_tag 'no_image.jpg', size: '100x100'
-              div
-                = hotel[:address1]
-                = hotel[:address2]
-    - else
-      h5 ・・・周辺にホテルは無いようです。テントを購入しましょう。
-      - if result[:tent]
-        .card-deck.mb-3.text-center.h5
-          - result[:tent].each do |tent|
+        h6 ニュースが取得できませんでした。
+      h4 謝罪する
+      h6
+        | 遅刻のお詫びにはご飯を奢ると喜ばれます。
+        br
+        | 周辺のお店をいますぐ予約しましょう。
+      - if result[:restaurant]
+        .card-deck.mb-3.text-center
+          - result[:restaurant].each do |rest|
+            .card.shadow-sm
+              .card-header.card-header-rest
+                = link_to rest[:name], rest[:url]
+              .card-body
+                - if rest[:image_url]
+                  = image_tag rest[:image_url], size: '100x100'
+                - else
+                  = image_tag 'no_image.jpg', size: '100x100'
+                div
+                  = rest[:category]
+                div
+                  = rest[:address]
+        .mb-4
+          <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
+          <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="153" height="39" border="0" alt="グルメ情報検索サイト　ぐるなび">
+          </a>
+      - else
+        h6 ・・・周辺に飲食店は無いようです。ハムを買ってお詫びしましょう。
+        - if result[:ham]
+          .card-deck.mb-3.text-center
+            - result[:ham].each do |ham|
+              .card.mb-4.shadow-sm
+                .card-header.card-header-rest
+                  = link_to ham[:name], ham[:url]
+                .card-body
+                  - if ham[:image_url]
+                    = image_tag ham[:image_url], size: '100x100'
+                  - else
+                    = image_tag 'no_image.jpg', size: '100x100'
+                  div
+                    = number_to_currency(ham[:price])
+                  div
+                    | レビュー評価： #{ ham[:score] }点
+        - else
+          h6 ・・・・・・飲食店もハムも情報を取得できませんでした。
+      h4 今後の対策
+      h6
+        | 遅刻しないためには周辺のホテルに前泊すべきです。
+      - if result[:hotel]
+        .card-deck.mb-3.text-center
+          - result[:hotel].each do |hotel|
             .card.mb-4.shadow-sm
               .card-header.card-header-hotel
-                = link_to tent[:name], tent[:url]
+                = link_to hotel[:name], hotel[:url]
               .card-body
-                - if tent[:image_url]
-                  = image_tag tent[:image_url], size: '100x100'
+                - if hotel[:image_url]
+                  = image_tag hotel[:image_url], size: '100x100'
                 - else
                   = image_tag 'no_image.jpg', size: '100x100'
                 div
-                  = number_to_currency(tent[:price])
-                div
-                  | レビュー評価： #{ tent[:score] }点
+                  = hotel[:address1]
+                  = hotel[:address2]
       - else
-        h5 ・・・・・・ホテルもテントも情報を取得できませんでした。
+        h6 ・・・周辺にホテルは無いようです。テントを購入しましょう。
+        - if result[:tent]
+          .card-deck.mb-3.text-center
+            - result[:tent].each do |tent|
+              .card.mb-4.shadow-sm
+                .card-header.card-header-hotel
+                  = link_to tent[:name], tent[:url]
+                .card-body
+                  - if tent[:image_url]
+                    = image_tag tent[:image_url], size: '100x100'
+                  - else
+                    = image_tag 'no_image.jpg', size: '100x100'
+                  div
+                    = number_to_currency(tent[:price])
+                  div
+                    | レビュー評価： #{ tent[:score] }点
+        - else
+          h6 ・・・・・・ホテルもテントも情報を取得できませんでした。
 
