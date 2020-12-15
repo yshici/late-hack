@@ -1,24 +1,19 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Late Hack 〜全ての遅刻に悩む人へ〜
+https://www.late-hack.com/
+## サービス概要
+待ち合わせに遅刻した時の申し訳ない気持ちをなんとかしたい、、
+<br>
+遅刻した時の気まずい雰囲気をなんとかしたい、、
+<br>
+そんな時に言い訳の材料を提供します！
+## ユーザーターゲット
+遅刻したくないけど遅刻してしまう人
+## ユーザーが抱える課題
+遅刻しないための情報は世に多くあるが、
+<br>
+それでも遅刻してしまった時、うまく切り抜ける方法がわからない。
+## 解決方法
+遅刻してしまった時の言い訳の材料や怒られないための振る舞いについて情報を提供する。
+## 未来
+遅刻してしまった人、遅刻された人、双方に笑顔が生まれ、
+時間に追われる社会から解放される。
