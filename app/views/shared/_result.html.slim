@@ -44,12 +44,10 @@ h3.pt-3.border-bottom.border-gray 相手に怒られないためのテクニッ�
             thead
               tbody
                 tr
-                  th scope="col"
                     th 路線名
                     th 運行会社
                 - result[:train].each do |t|
                   tr
-                    th scope="col"
                       td = t[:name]
                       td = t[:company]
       - else

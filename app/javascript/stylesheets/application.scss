@@ -6,6 +6,7 @@ body {
   background-color: beige;
 
 }
+
 header {
   background-color: palegoldenrod;
 }
@@ -59,4 +60,10 @@ header {
 
 .card-header-hotel {
   background-color: beige;
+}
+// Bootstrapのtableで、長い文字の時折り返す設定
+.table {
+  table-layout: fixed;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
