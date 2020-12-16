@@ -27,7 +27,7 @@ class SchedulesController < ApplicationController
     if @schedule.update(adjust_schedule_params)
       redirect_to schedules_path, success: 'スケジュールを更新しました'
     else
-      lash.now[:danger] = 'スケジュール更新に失敗しました'
+      flash.now[:danger] = 'スケジュール更新に失敗しました'
       render :edit
     end
   end
