@@ -6,6 +6,8 @@ header
           = link_to 'スケジュール一覧', schedules_path, class: 'navbar-brand'
       ul.navbar-nav
         li.nav-item
-          = link_to current_user.name, user_path(current_user), class: 'navbar-brand'
+          / = link_to current_user.name, user_path(current_user), class: 'navbar-brand'
+          = link_to user_path(current_user), class: 'navbar-brand' do
+            i.far.fa-user-circle.fa-lg
         li.nav-item
           = link_to 'ログアウト', logout_path, method: :delete, class: 'navbar-brand'
