@@ -81,13 +81,13 @@ body {
 
 #pac-input {
   background-color: #fff;
-  font-family: Roboto;
   font-size: 15px;
   font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
+  margin: 10px 0 0 10px;
+  padding: 3px 11px 3px 13px;
   text-overflow: ellipsis;
-  width: 300px;
+  width: 230px;
+  height: 30px;
 }
 
 #pac-input:focus {
@@ -109,14 +109,14 @@ body {
 .custom-map-control-button {
   appearance: button;
   background-color: dimgray;
-  border: 2px solid black;
+  border: 1px solid black;
   border-radius: 2px;
   box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   margin: 10px;
-  padding: 0 0.5em;
+  padding: 3px 11px 3px 13px;
   height: 30px;
-  font: 400 18px;
+  font-size: 15px;
   color: white;
   overflow: hidden;
 }
