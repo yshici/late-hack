@@ -2,7 +2,7 @@
   h3.pt-3.border-bottom.border-gray 出発地点・待ち合わせ場所を指定してください
   .row
     .bg-white.shadow-sm.rounded-lg.border.col-md-12.col-lg-8.offset-lg-2
-      .py-5.mx-5.center-block
+      .pt-3.center-block
         = form_with model: @schedule, url: temporary_schedules_path, local: true do |f|
           = render 'shared/error_messages', object: f.object
           .form-group

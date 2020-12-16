@@ -1,8 +1,15 @@
 .map_wrapper {
   position: relative;
-  width:100%;
-  padding-top:56.25%; // width:height = 16:9
+  width: 100%;
+  padding-top: 56.25%; // width:height = 16:9
 }
+
+@media screen and (max-width: 575px) {
+  .map_wrapper {
+    padding-top: 120%;
+  }
+}
+
 #map {
   position: absolute;
   width: 100%;

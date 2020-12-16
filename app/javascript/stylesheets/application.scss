@@ -4,17 +4,10 @@
 
 body {
   background-color: beige;
-  font-size: 0.9vw;
+
 }
 header {
   background-color: palegoldenrod;
-  .navbar-brand {
-    font-size: 1.4em;
-  }
-}
-
-.form-control {
-  font-size: 0.8em;
 }
 
 .top_image{
@@ -29,9 +22,12 @@ header {
   display: none;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 767px) {
   .top_image_lg { display: none; }
   .top_image_md { display: block; }
+  .navbar-brand {
+    font-size: 1.4em;
+  }
 }
 
 .form-btn {
