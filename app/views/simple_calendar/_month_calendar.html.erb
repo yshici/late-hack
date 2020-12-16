@@ -1,4 +1,4 @@
-<div class="simple-calendar bg-transparent">
+<div class="simple-calendar bg-transparent" style="max-width: 100%">
   <div class="calendar-heading">
     <%= link_to t('simple_calendar.previous', default: '<<前月'), calendar.url_for_previous_view, class: "previous-month-btn" %>
     <span class="calendar-title h4"><%= start_date.year %>年 <%= t('date.month_names')[start_date.month] %></span>
