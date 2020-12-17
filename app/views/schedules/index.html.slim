@@ -1,9 +1,15 @@
-.container
+.container-lg
   .text-center.py-3
-    = link_to '新しい予定を登録する', new_schedule_path, class: "h2 form-btn"
-
-  = month_calendar events: @schedules do |date, schedules|
-    h2 = date.strftime("%-d")
-    - schedules.each do |schedule|
-      .calendar-schedule
-        = link_to schedule.name, schedule_path(schedule), class: "text-dark"
+    = link_to '新しい予定を登録する', new_schedule_path, class: "h5 form-btn"
+  .pb-3#calendar-month-display
+    = month_calendar events: @schedules do |date, schedules|
+      h5 = date.strftime("%-d")
+      - schedules.each do |schedule|
+        .calendar-schedule
+          = link_to "#{schedule.meeting_time.strftime("%H:%M")}  #{schedule.name}", schedule_path(schedule), class: "text-dark"
+  .pb-3#calendar-week-display
+    = week_calendar events: @schedules do |date, schedules|
+      h5 = date.strftime("%-d")
+      - schedules.each do |schedule|
+        .calendar-schedule
+          = link_to "#{schedule.meeting_time.strftime("%H:%M")}  #{schedule.name}", schedule_path(schedule), class: "text-dark"

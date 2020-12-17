@@ -1,7 +1,8 @@
-= image_tag 'late_hack_topimage.jpg', class: 'top_image'
+= image_tag 'late_hack_topimage_lg.jpg', class: 'top_image_lg'
+= image_tag 'late_hack_topimage_md.jpg', class: 'top_image_md mx-auto mt-3'
 .container
   .row
-    .col-md-10.offset-md-2.col-lg-8
+    .col-md-10.offset-lg-2.offset-md-1.col-lg-8
       .py-5.mx-5.center-block.text-center
         h5 今遅刻しそう or 遅刻している人へ
         = link_to '今すぐ診断する', new_temporary_schedules_path, class: 'form-btn mb-5 h5'

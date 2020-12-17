@@ -20,9 +20,13 @@ ja:
         name: '予定名'
         meeting_time: '待ち合わせ時間'
         destination_name: '待ち合わせ場所'
-        destination_address: '目的地住所'
-        destination_lat: '緯度'
-        destination_lang: '経度'
+        destination_address: '待ち合わせ場所住所'
+        destination_lat: '待ち合わせ場所緯度'
+        destination_lang: '待ち合わせ場所経度'
+        start_point_name: '出発地'
+        start_point_address: '出発地住所'
+        start_point_lat: '出発地緯度'
+        start_point_lang: '出発地経度'
         description: '概要'
   date:
     abbr_day_names:

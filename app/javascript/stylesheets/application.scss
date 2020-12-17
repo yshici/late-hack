@@ -1,4 +1,3 @@
-$font-size-base: 0.7rem;
 @import "~bootstrap/scss/bootstrap";
 @import "~tempusdominus-bootstrap-4/src/sass/tempusdominus-bootstrap-4-build";
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
@@ -6,12 +5,30 @@ $font-size-base: 0.7rem;
 body {
   background-color: beige;
 }
+
 header {
   background-color: palegoldenrod;
 }
 
 .top_image{
   width: 100%
+}
+
+.top_image_lg {
+  width: 100%;
+}
+
+.top_image_md {
+  width: 90%;
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .top_image_lg { display: none; }
+  .top_image_md { display: block; }
+  .navbar-brand {
+    font-size: 1.4em;
+  }
 }
 
 .form-btn {
@@ -21,7 +38,6 @@ header {
   text-decoration: none;
   color: #FFF;
   background-color: burlywood;
-//   background-image: linear-gradient(45deg, #FFC107 0%, #ff8b5f 100%);
 }
 
 .link-btn {
@@ -44,4 +60,15 @@ header {
 
 .card-header-hotel {
   background-color: beige;
+}
+
+// Bootstrapのtableで、長い文字の時折り返す設定
+.table {
+  table-layout: fixed;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.nav-item{
+  font-size: 0.8em
 }

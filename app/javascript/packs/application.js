@@ -23,3 +23,18 @@ $(document).ready(function () {
       return false;
   });
 });
+
+$(window).on('load resize', function(){
+  var windowWidth = $(window).width();
+  if (windowWidth <= 767) {
+    $("#calendar-month-display").hide();
+    $("#calendar-week-display").show();
+    // document.getElementById("calendar-month-display").style.display="none";
+    // document.getElementById("calendar-week-display").style.display="block";
+  } else {
+    $("#calendar-month-display").show();
+    $("#calendar-week-display").hide();
+    // document.getElementById("calendar-month-display").style.display="block";
+    // document.getElementById("calendar-week-display").style.display="none";
+  }
+});

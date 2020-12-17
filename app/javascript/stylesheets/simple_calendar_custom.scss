@@ -7,11 +7,11 @@
   }
 
   .wday-0 { color: red; }
-  .wday-1 {}
-  .wday-2 {}
-  .wday-3 {}
-  .wday-4 {}
-  .wday-5 {}
+  .wday-1 { color: black; }
+  .wday-2 { color: black; }
+  .wday-3 { color: black; }
+  .wday-4 { color: black; }
+  .wday-5 { color: black; }
   .wday-6 { color: blue; }
   .today { border: solid 2px black; }
   .past {}
@@ -25,7 +25,7 @@
 
   .has-events {}
 
-  .sss {
+  .calendar-table {
     border: solid 1px gray;
     background-color: black;
     color: white;
@@ -35,7 +35,6 @@
     text-align: center;
     position: relative;
     .calendar-title{
-      // font-size: 40px;
       text-align: center;
     }
     .previous-month-btn{
@@ -58,8 +57,8 @@
 .calendar-schedule {
   color: black;
   font-size: 0.9em;
-  margin: 1.6em 0;
-  padding: 1em;
+  margin: 0.5em;
+  padding: 0.7em;
   position: relative;
   background: linear-gradient(to right, #ffffcc 0%, #f1f1c1 0.5%, #f1f1c1 13%, #ffffcc 16%);
 }

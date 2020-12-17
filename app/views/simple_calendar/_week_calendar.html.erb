@@ -1,27 +1,18 @@
-<div class="simple-calendar">
+<div class="simple-calendar bg-transparent">
   <div class="calendar-heading">
-    <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view %>
-    <% if calendar.number_of_weeks == 1 %>
-      <span class="calendar-title">Week <%= calendar.week_number %></span>
-    <%else%>
-        <span class="calendar-title">Week <%= calendar.week_number %> - <%= calendar.end_week %></span>
-    <%end%>
-        <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view %>
+    <%= link_to t('simple_calendar.previous', default: '<<前週'), calendar.url_for_previous_view, class: "previous-month-btn" %>
+    <span class="calendar-title h4"><%= start_date.year %>年 <%= t('date.month_names')[start_date.month] %></span>
+    <%= link_to t('simple_calendar.next', default: '次週>>'), calendar.url_for_next_view, class: "next-month-btn" %>
   </div>
 
   <table class="table table-striped">
-    <thead>
-      <tr>
-        <% date_range.slice(0, 7).each do |day| %>
-          <th><%= t('date.abbr_day_names')[day.wday] %></th>
-        <% end %>
-      </tr>
-    </thead>
+
 
     <tbody>
       <% date_range.each_slice(7) do |week| %>
-        <tr>
-          <% week.each do |day| %>
+        <% week.each do |day| %>
+          <tr class="calendar-table">
+            <td class="calendar-table" style="width:40px"><%= t('date.abbr_day_names')[day.wday] %></td>
             <%= content_tag :td, class: calendar.td_classes_for(day) do %>
               <% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(passed_block) %>
                 <% capture_haml(day, sorted_events.fetch(day, []), &passed_block) %>
@@ -29,8 +20,8 @@
                 <% passed_block.call day, sorted_events.fetch(day, []) %>
               <% end %>
             <% end %>
-          <% end %>
-        </tr>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
