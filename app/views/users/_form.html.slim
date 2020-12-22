@@ -1,4 +1,5 @@
 = form_with model: user, local: true do |f|
+  = render 'shared/error_messages', object: f.object
   .form-group.mb-5
     = f.label :name, class: 'control-label pull-left'
     = f.text_field :name, id: "user_last_name", class: "form-control", type: "text"
