@@ -21,7 +21,14 @@ module ProofOfDelay
       g.skip_routes true
       g.assets false
       g.helper false
-      g.test_framework false
+      g.test_framework :rspec,
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false,
+                       controller_specs: false,
+                       model_specs: true,
+                       request_specs: false,
+                       fixtures: true
     end
 
     # 言語設定
