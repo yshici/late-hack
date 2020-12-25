@@ -5,10 +5,10 @@
       .py-5.mx-5.center-block.text-center
         = form_with url: login_path, local: true do |f|
           .form-group.mb-5
-            = f.label :email, class: 'control-label pull-left'
+            = f.label :email, User.human_attribute_name(:email), class: 'control-label pull-left'
             = f.text_field :email, id: "email", class: "form-control", type: "email"
           .form-group.mb-5
-            = f.label :password, class: 'control-label pull-left'
+            = f.label :password, User.human_attribute_name(:password), class: 'control-label pull-left'
             = f.text_field :password, id:"password", class:"form-control", type:"password"
           = f.submit 'ログイン', class: 'form-btn'
 
