@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :schedule do
-    name { '予定名' }
+    sequence(:name) { |n| "schedule#{n}" }
     meeting_time { Time.now }
     destination_name { '渋谷駅' }
     destination_address { '日本、〒150-0002 東京都渋谷区渋谷２丁目２４' }
