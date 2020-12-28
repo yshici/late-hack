@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_10_142237) do
+ActiveRecord::Schema.define(version: 2020_12_28_001955) do
+
+  create_table "excuse_schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "schedule_id", null: false
+    t.bigint "excuse_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["excuse_id"], name: "index_excuse_schedules_on_excuse_id"
+    t.index ["schedule_id"], name: "index_excuse_schedules_on_schedule_id"
+  end
+
+  create_table "excuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -40,4 +55,6 @@ ActiveRecord::Schema.define(version: 2020_12_10_142237) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "excuse_schedules", "excuses"
+  add_foreign_key "excuse_schedules", "schedules"
 end
