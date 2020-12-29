@@ -42,7 +42,6 @@ function initMapRoutes() {
         }
         function addMarker(response, n) {
           var excuse = gon.excuse; // gon使ってコントローラーから読み込み
-          var excuseRandomNum = Math.floor(Math.random()*excuse.length);
           var splitNum = Math.round(response.routes[0].overview_path.length * n / 4);
           var latlngPoint = new google.maps.LatLng(response.routes[0].overview_path[splitNum].lat(), response.routes[0].overview_path[splitNum].lng());
           var marker = new google.maps.Marker({
@@ -50,7 +49,7 @@ function initMapRoutes() {
             map: map
           });
           var infowindow = new google.maps.InfoWindow({
-            content: excuse[excuseRandomNum],
+            content: excuse[n-1]["content"],
             position: marker.position,
           });
           infowindow.open(marker.position, marker);
