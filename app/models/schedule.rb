@@ -38,6 +38,8 @@ class Schedule < ApplicationRecord
   end
 
   belongs_to :user
+  has_many :excuses, through: :excuse_schedules
+  has_many :excuse_schedules
 
   def start_time
     self.meeting_time
@@ -50,6 +52,12 @@ class Schedule < ApplicationRecord
         get_api_info_with_position = ApiGet.new().get_api_with_position(schedule.destination_lat, schedule.destination_lng)
         schedule.result = get_api_info.merge(get_api_info_with_position)
         schedule.save!
+        # 言い訳を割り当てる
+        excuse_select = Excuse.find(Excuse.pluck(:id).shuffle[0..2])
+        excuse_select.each do |excuse|
+          excuse_schedule = ExcuseSchedule.new(schedule_id: schedule.id, excuse_id: excuse.id)
+          excuse_schedule.save!
+        end
         ScheduleMailer.output_result(schedule).deliver_now
       end
     end

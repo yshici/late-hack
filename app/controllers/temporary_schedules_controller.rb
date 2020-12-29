@@ -22,7 +22,7 @@ class TemporarySchedulesController < ApplicationController
     @latlng << TemporarySchedule.new().adjust_latlng(@schedule["start_point_lat_lng"])
     gon.latlng = @latlng
     @api_info = ApiGet.new().get_api.merge(ApiGet.new().get_api_with_position(@latlng[0][0], @latlng[0][1]))
-    gon.excuse = ExcuseForLate.new().excuse
+    gon.excuse = Excuse.find(Excuse.pluck(:id).shuffle[0..2])
   end
 
   private
