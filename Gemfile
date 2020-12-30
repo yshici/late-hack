@@ -63,6 +63,9 @@ gem 'simple_form'
 # Js Valiable
 gem 'gon'
 
+# Admin page
+gem 'administrate'
+
 group :development, :test do
   # Test
   gem 'factory_bot_rails'
