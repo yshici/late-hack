@@ -38,8 +38,8 @@ class Schedule < ApplicationRecord
   end
 
   belongs_to :user
-  has_many :excuses, through: :excuse_schedules
   has_many :excuse_schedules
+  has_many :excuses, through: :excuse_schedules
 
   def start_time
     self.meeting_time
