@@ -346,6 +346,9 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    seed-fu (2.3.9)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
     selectize-rails (0.12.6)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
@@ -449,6 +452,7 @@ DEPENDENCIES
   redis-rails
   rspec-rails
   sass-rails (>= 6)
+  seed-fu
   selenium-webdriver
   shoulda-matchers
   simple_calendar (~> 2.0)
