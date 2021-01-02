@@ -52,3 +52,4 @@ production:
   database: <%= Rails.application.credentials.database_production[:database] %>
   username: <%= Rails.application.credentials.database_production[:username] %>
   password: <%= Rails.application.credentials.database_production[:password] %>
+  host: <%= Rails.application.credentials.database_production[:host] %>
