@@ -9,4 +9,6 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 255 }
 
   has_many :schedules, dependent: :destroy
+
+  enum role: { general: 0, admin: 1 }
 end
