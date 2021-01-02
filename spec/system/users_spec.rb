@@ -36,7 +36,7 @@ RSpec.describe "Users", type: :system do
     end
   end
 
-  describe 'ログイン後' do
+  describe '一般ユーザーログイン後' do
     before { login(user) }
     describe 'ユーザー詳細' do
       context 'ユーザー編集ページへアクセス' do
@@ -65,6 +65,23 @@ RSpec.describe "Users", type: :system do
           expect(current_path).to eq user_path(user)
           expect(page).to have_content 'user_test'
         end
+      end
+      context '管理画面へアクセス' do
+        it '管理画面へのアクセスが失敗する' do
+          visit admin_root_path
+          expect(current_path).to eq root_path
+        end
+      end
+    end
+  end
+
+  describe '管理ユーザーログイン後' do
+    let(:admin_user) { create(:user, :admin) }
+    before { login(admin_user) }
+    context '管理画面へアクセス' do
+      it '管理画面へのアクセスが成功する' do
+        visit admin_root_path
+        expect(current_path).to eq admin_root_path
       end
     end
   end
