@@ -83,7 +83,7 @@ h3.pt-3.border-bottom.border-gray 相手に怒られないためのテクニッ�
               .card-header.card-header-rest
                 = link_to rest[:name], rest[:url]
               .card-body
-                - if rest[:image_url]
+                - if rest[:image_url].present?
                   = image_tag rest[:image_url], size: '100x100'
                 - else
                   = image_tag 'no_image.jpg', size: '100x100'
@@ -124,7 +124,7 @@ h3.pt-3.border-bottom.border-gray 相手に怒られないためのテクニッ�
               .card-header.card-header-hotel
                 = link_to hotel[:name], hotel[:url]
               .card-body
-                - if hotel[:image_url]
+                - if hotel[:image_url].present?
                   = image_tag hotel[:image_url], size: '100x100'
                 - else
                   = image_tag 'no_image.jpg', size: '100x100'
