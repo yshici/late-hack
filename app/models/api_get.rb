@@ -3,6 +3,8 @@ class ApiGet
   require "open-uri"
 
   def get_api
+    # 各種apiの取得件数
+    num_of_get = 3
     # 鉄道遅延情報 api取得
     train_delay_url = "https://tetsudo.rti-giken.jp/free/delay.json"
     begin
@@ -13,7 +15,6 @@ class ApiGet
         name_train_delay << { name: t["name"], company: t["company"] }
       end
       get = { train: name_train_delay }
-      # puts get[:train]
       # 長期運休等も拾っているので消す。たまにチェック必要。
       # 取得元サイト https://www.tetsudo.com/traffic/
       ignore_train = ["小湊鉄道線", "富士急行", "島原鉄道線", "特急ラピート", "特急サザン", "阿武隈急行線"]
@@ -42,7 +43,7 @@ class ApiGet
       response_news = URI.open(news_url)
       news = JSON.parse(response_news.read)
       get_news = []
-      news["articles"].first(5).each do |article|
+      news["articles"].first(num_of_get).each do |article|
         get_news << { title: article["title"], description: article["description"], url: article["url"], image: article["urlToImage"] }
       end
       get[:news] = get_news
@@ -53,6 +54,8 @@ class ApiGet
   end
 
   def get_api_with_position(lat, lng)
+    # 各種apiの取得件数
+    num_of_get = 3
     rakuten_api_key = Rails.application.credentials.api_key[:rakuten]
     open_weather_api_key = Rails.application.credentials.api_key[:open_weather]
     restaurant_api_key = Rails.application.credentials.api_key[:restaurant_gurunavi]
@@ -61,7 +64,6 @@ class ApiGet
     begin
       response_weather = URI.open(open_weather_url)
       result_weather = JSON.parse(response_weather.read)
-      # p result_weather
       get = { weather: { id: result_weather["current"]["weather"][0]["id"], type: result_weather["current"]["weather"][0]["description"], temp: result_weather["current"]["temp"], pressure: result_weather["current"]["pressure"], wind_speed: result_weather["current"]["wind_speed"] } }
     rescue
       get = { weather: nil }
@@ -72,7 +74,7 @@ class ApiGet
     begin
       response_restaurant = URI.open(restaurant_url)
       restaurant_gurunavi = JSON.parse(response_restaurant.read)
-      count = restaurant_gurunavi["rest"].length > 3 ? 3 : restaurant_gurunavi["rest"].length
+      count = restaurant_gurunavi["rest"].length > num_of_get ? num_of_get : restaurant_gurunavi["rest"].length
       get_restaurant = []
       restaurant_gurunavi["rest"].first(count).each do |restaurant|
         get_restaurant << { name: restaurant["name"], category: restaurant["category"], url: restaurant["url"], image_url: restaurant["image_url"]["shop_image1"], address: restaurant["address"] }
@@ -86,7 +88,7 @@ class ApiGet
         response_ham = URI.open(rakuten_ham_url)
         ham_rakuten = JSON.parse(response_ham.read)
         get_ham = []
-        ham_rakuten["Items"].first(3).each do |ham|
+        ham_rakuten["Items"].first(num_of_get).each do |ham|
           get_ham << { name: ham["Item"]["itemName"], url: ham["Item"]["itemUrl"], image_url: ham["Item"]["smallImageUrls"][0]["imageUrl"], price: ham["Item"]["itemPrice"], score: ham["Item"]["reviewAverage"] }
         end
         get[:ham] = get_ham
@@ -101,7 +103,7 @@ class ApiGet
     begin
       response_hotel = URI.open(rakuten_hotel_url)
       hotel_rakuten = JSON.parse(response_hotel.read)
-      count = hotel_rakuten["hotels"].length > 3 ? 3 : hotel_rakuten["hotels"].length
+      count = hotel_rakuten["hotels"].length > num_of_get ? num_of_get : hotel_rakuten["hotels"].length
       get_hotel = []
       hotel_rakuten["hotels"].first(count).each do |hotel|
         get_hotel << { name: hotel["hotel"][0]["hotelBasicInfo"]["hotelName"], url: hotel["hotel"][0]["hotelBasicInfo"]["hotelInformationUrl"], image_url: hotel["hotel"][0]["hotelBasicInfo"]["hotelImageUrl"], address1: hotel["hotel"][0]["hotelBasicInfo"]["address1"], address2: hotel["hotel"][0]["hotelBasicInfo"]["address2"] }
@@ -115,7 +117,7 @@ class ApiGet
         response_tent = URI.open(rakuten_tent_url)
         tent_rakuten = JSON.parse(response_tent.read)
         get_tent = []
-        tent_rakuten["Items"].first(3).each do |tent|
+        tent_rakuten["Items"].first(num_of_get).each do |tent|
           get_tent << { name: tent["Item"]["itemName"], url: tent["Item"]["itemUrl"], image_url: tent["Item"]["smallImageUrls"][0]["imageUrl"], price: tent["Item"]["itemPrice"], score: tent["Item"]["reviewAverage"] }
         end
         get[:tent] = get_tent
