@@ -12,6 +12,7 @@ class ExcuseDashboard < Administrate::BaseDashboard
     schedules: Field::HasMany,
     id: Field::Number,
     content: Field::String,
+    late_time: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -26,6 +27,7 @@ class ExcuseDashboard < Administrate::BaseDashboard
   schedules
   id
   content
+  late_time
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -35,6 +37,7 @@ class ExcuseDashboard < Administrate::BaseDashboard
   schedules
   id
   content
+  late_time
   created_at
   updated_at
   ].freeze
@@ -46,6 +49,7 @@ class ExcuseDashboard < Administrate::BaseDashboard
   excuse_schedules
   schedules
   content
+  late_time
   ].freeze
 
   # COLLECTION_FILTERS
