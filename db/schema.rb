@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_31_083457) do
+ActiveRecord::Schema.define(version: 2021_01_13_004301) do
 
   create_table "excuse_schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "schedule_id", null: false
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2020_12_31_083457) do
     t.string "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "late_time", null: false
   end
 
   create_table "schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
