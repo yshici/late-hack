@@ -49,6 +49,7 @@ test:
 #
 production:
   <<: *default
-  database: proof_of_delay_production
-  username: proof_of_delay
-  password: <%= ENV['PROOF_OF_DELAY_DATABASE_PASSWORD'] %>
+  database: <%= Rails.application.credentials.database_production[:database] %>
+  username: <%= Rails.application.credentials.database_production[:username] %>
+  password: <%= Rails.application.credentials.database_production[:password] %>
+  host: <%= Rails.application.credentials.database_production[:host] %>
