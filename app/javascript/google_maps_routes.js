@@ -51,6 +51,7 @@ function initMapRoutes() {
           var infowindow = new google.maps.InfoWindow({
             content: excuse[n-1]["content"],
             position: marker.position,
+            maxWidth: 100,
           });
           infowindow.open(marker.position, marker);
           attachInfoWindow(marker, infowindow);
