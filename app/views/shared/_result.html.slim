@@ -7,7 +7,7 @@ h3.pt-3.border-bottom.border-gray 診断結果
       h6
         | 道中でいろんなことが起こりました。
         br
-        | ３時間遅刻できます。
+        | #{@late_time}遅刻できます。
       h6.text-danger#map-error
     = render 'shared/map_routes'
     //////// 天気情報と番組表は一旦使わない //////
