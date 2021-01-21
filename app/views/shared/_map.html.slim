@@ -10,5 +10,5 @@
   div#map
   input id="pac-input" class=%i[controls ignore-enterkey] type="text" placeholder="検索"
 
-- google_api_place = "https://maps.googleapis.com/maps/api/js?key=#{ Rails.application.credentials.api_key[:google_maps] }&libraries=places&callback=initMap&v=beta&map_ids=8e0a97af9386fef".html_safe
+- google_api_place = "https://maps.googleapis.com/maps/api/js?key=#{ Rails.application.credentials.api_key[:google_maps] }&libraries=places&callback=initMap".html_safe
 script{ async src = google_api_place }
