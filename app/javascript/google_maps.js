@@ -15,8 +15,6 @@ function initMap() {
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationButton);
   // 位置情報取得ボタンクリックで発火
   locationButton.addEventListener("click", () => {
-    console.log(window.event.keyCode);
-    console.log(window.event.which);
     event.preventDefault();
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
