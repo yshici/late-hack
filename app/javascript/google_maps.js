@@ -15,8 +15,6 @@ function initMap() {
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationButton);
   // 位置情報取得ボタンクリックで発火
   locationButton.addEventListener("click", () => {
-    console.log(window.event.keyCode);
-    console.log(window.event.which);
     event.preventDefault();
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -72,8 +70,8 @@ function initMap() {
         `<div id="ababab">` +
           `<p>${ marker.title }</p>` +
           `<p>${ marker.address }</p>` +
-          `<input type="button" value="出発地点に設定" id="addStartPoint">` +
-          `<input type="button" value="待ち合わせ場所に設定" id="addDestination">` +
+          `<input type="button" value="出発地点に設定" id="addStartPoint"  href="#startPoint">` +
+          `<input type="button" value="待ち合わせ場所に設定" id="addDestination" href="#destination">` +
         `</div>`;
       markers.push(
         new google.maps.Marker({marker})
@@ -104,8 +102,8 @@ function initMap() {
             `<div id="ababab">` +
             `<p>${ placeOnMap.name }</p>` +
             `<p>${ placeOnMap.formatted_address }</p>` +
-            `<input type="button" value="出発地点に設定" id="addStartPoint">` +
-            `<input type="button" value="待ち合わせ場所に設定" id="addDestination">` +
+            `<input type="button" value="出発地点に設定" id="addStartPoint" href="#startPoint">` +
+            `<input type="button" value="待ち合わせ場所に設定" id="addDestination" href="#destination">` +
             `</div>`;
           var infowindow = new google.maps.InfoWindow({
             content: contentOnMap,

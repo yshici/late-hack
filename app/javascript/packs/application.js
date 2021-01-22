@@ -9,11 +9,13 @@ require("moment")
 require("tempusdominus-bootstrap-4")
 require("google_maps.js")
 require("google_maps_routes.js")
+require("map_modal.js")
 
 import '@fortawesome/fontawesome-free/js/all'
 import '../stylesheets/application'
 import '../stylesheets/google_maps'
-import '../stylesheets/simple_calendar_custom';
+import '../stylesheets/simple_calendar_custom'
+import '../stylesheets/map_modal'
 
 // エンターキーによるsubmitを無効化
 $(document).ready(function () {
