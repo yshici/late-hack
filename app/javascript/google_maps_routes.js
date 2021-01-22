@@ -48,10 +48,9 @@ function initMapRoutes() {
             position: latlngPoint,
             map: map
           });
-          // debugger;
           var contentString =
           `<div id="ababab">` +
-            `<p>${ excuse[n-1]["content"] } <br> + ${ excuse[n-1]["late_time"] }分</p>`
+            `<p>${ excuse[n-1]["content"] } <br> ＋ ${ excuse[n-1]["late_time"] }分</p>` +
           `</div>`;
           var infowindow = new google.maps.InfoWindow({
             content: contentString,
