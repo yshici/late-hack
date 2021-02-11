@@ -4,12 +4,11 @@ h3.pt-3.border-bottom.border-gray 診断結果
 .row
   .bg-white.shadow.rounded.border.col-lg-10.col-md-12.offset-lg-1.p-3
     .mx-4.center-block
-      h6
-        | 道中でいろんなことが起こりました。
-        br
-        | #{@late_time}遅刻できます。
+      h6#lateexcuse
+      h6#latetime
       h6.text-danger#map-error
     = render 'shared/map_routes'
+
     //////// 天気情報と番組表は一旦使わない //////
       / h2 あなたはこの予定に3時間遅れることができます。
       / - if result[:weather]

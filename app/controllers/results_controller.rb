@@ -13,5 +13,6 @@ class ResultsController < ApplicationController
       late_times += select_excuse.late_time
     end
     @late_time = Time.at(late_times*60).utc.strftime('%-H時間%-M分')
+    gon.late_time = @late_time
   end
 end

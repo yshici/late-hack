@@ -28,14 +28,55 @@ function initMapRoutes() {
         directions: response,
       });
       let leg = response.routes[0].legs[0];
-      setTimeout(function() {
-        map.setZoom(16); // ルート表示後にズームを変更
-      });
       if (response.routes[0].overview_path.length < 4) {
-        // 出発地・待ち合わせ場所が近い場合エラー
-        var errorMsg = document.getElementById("map-error");
-        errorMsg.textContent = "近すぎて何も起こりませんでした...";
+        // 出発地・待ち合わせ場所が近い場合
+        document.getElementById("nearTweetBtn").style.display ="block";
+        document.getElementById("TweetBtn").style.display ="none";
+        var lateExcuse = document.getElementById("lateexcuse");
+        lateExcuse.textContent = "ついのんびりしてしまいました。";
+        var lateTime = document.getElementById("latetime");
+        lateTime.textContent = "3時間遅刻できます。";
+        var excuse = 'のんびりしていました';
+        var latlngPoint = new google.maps.LatLng(response.request.destination.location.lat(), response.request.destination.location.lng());
+        debugger;
+        addMarker(response);
+        function addMarker(response) {
+          var marker = new google.maps.Marker({
+            position: latlngPoint,
+            map: map
+          });
+          var contentString =
+            `<div id="ababab">` +
+              `<p>${ excuse }</p>` +
+            `</div>`;
+          var infowindow = new google.maps.InfoWindow({
+            content: contentString,
+            position: marker.position,
+            maxWidth: 100,
+          });
+          infowindow.open(marker.position, marker);
+          attachInfoWindow(marker, infowindow);
+          map.setCenter(latlngPoint);
+          map.setZoom(1);
+        }
+        map.setCenter(new GLatLng(response.request.destination.location.lat(), response.request.destination.location.lng()), 10);
+        function attachInfoWindow(marker, infowindow) {
+          marker.addListener("click", () => {
+            infowindow.close(marker.position, marker);
+            infowindow.open(marker.position, marker);
+          })
+        }
       } else {
+        setTimeout(function() {
+          map.setZoom(16); // ルート表示後にズームを変更
+        });
+        document.getElementById("TweetBtn").style.display ="block";
+        document.getElementById("nearTweetBtn").style.display ="none";
+        var lateExcuse = document.getElementById("lateexcuse");
+        lateExcuse.textContent = "道中でいろんなことが起こりました。";
+        var lateTime = document.getElementById("latetime");
+        var SumLateTime = gon.late_time;
+        lateTime.textContent = `${ SumLateTime }遅刻できます`;
         // ルートを4分割して1/4、2/4、3/4の点にマーカー
         for (let i = 1; i < 4; i++) {
           addMarker(response, i);

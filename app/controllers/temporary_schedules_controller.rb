@@ -23,14 +23,15 @@ class TemporarySchedulesController < ApplicationController
     gon.latlng = @latlng
     @api_info = ApiGet.new().get_api.merge(ApiGet.new().get_api_with_position(@latlng[0][0], @latlng[0][1]))
     # 言い訳をランダムで3つ取ってくる
-    select_excuses = Excuse.find(Excuse.pluck(:id).shuffle[0..2])
-    gon.excuse = select_excuses
+    @select_excuses = Excuse.find(Excuse.pluck(:id).shuffle[0..2])
+    gon.excuse = @select_excuses
     # 遅刻時間の合計算出して時間・分に変換
     late_times = 0
-    select_excuses.each do |select_excuse|
+    @select_excuses.each do |select_excuse|
       late_times += select_excuse.late_time
     end
     @late_time = Time.at(late_times*60).utc.strftime('%-H時間%-M分')
+    gon.late_time = @late_time
   end
 
   private
