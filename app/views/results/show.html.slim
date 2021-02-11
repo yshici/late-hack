@@ -8,4 +8,14 @@
       br
       | 待ち合わせ場所：#{ @schedule.destination_name }
       |              #{ @schedule.destination_address }
+  .rounded.col-lg-10.col-md-12.offset-lg-1.p-3
+    .mx-4.center-block
+      #nearTweetBtn(style="display: none;")
+        / = link_to "https://twitter.com/share?url=https://www.late-hack.com&text=#{@schedule.start_point_name}でのんびりしてしまいました。%0aのんびりすることも時には大事です。%0a３時間の遅刻を許可します。%0a&hashtags=LateHack,遅刻&lang=ja", class: 'btn btn-light border mt-3 center-block', target: '_blank' do
+        /   i.fab.fa-twitter style='color: #3399FF;'
+        /   |  オリジナル遅延証明をtweetする
+      #TweetBtn(style="display: none;")
+        / = link_to "https://twitter.com/share?url=https://www.late-hack.com&text=#{@schedule.start_point_name}から#{@schedule.destination_name}へ向かう途中、以下のことが起こりました。%0a・#{@select_excuses[0].content}%0a・#{@select_excuses[1].content}%0a・#{@select_excuses[2].content}%0a#{@late_time}の遅刻を許可します。%0a&hashtags=LateHack,遅刻&lang=ja", class: 'btn btn-light border mt-3 center-block', target: '_blank' do
+        /   i.fab.fa-twitter style='color: #3399FF;'
+        /   |  オリジナル遅延証明をtweetする
   = render 'shared/result', result: @schedule.result
