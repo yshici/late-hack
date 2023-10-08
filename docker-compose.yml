@@ -1,0 +1,36 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    command: >
+      bash -c "rm -f tmp/pids/* &&
+      bundle exec foreman start"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+      - bundle:/app/vendor/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    tty: true
+    stdin_open: true
+    environment:
+      TZ: Asia/Tokyo
+      WEBPACKER_DEV_SERVER_HOST: app
+  db:
+    platform: linux/x86_64
+    image: mysql:8.0
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3316:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
+volumes:
+  db_data:
+  node_modules:
+  bundle:
